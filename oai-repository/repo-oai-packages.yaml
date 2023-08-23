@@ -10,7 +10,7 @@ spec:
   content: Package
   deployment: false
   git:
-    branch: master
+    branch: main
     directory: /
-    repo: https://gitlab.eurecom.fr/nephio/oai-packages.git
+    repo: https://github.com/OPENAIRINTERFACE/oai-packages
   type: git
