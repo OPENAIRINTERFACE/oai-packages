@@ -1,0 +1,5 @@
+apiVersion: workload.nephio.org/v1alpha1
+kind: UDRDeployment
+metadata:
+  name: udr-example
+  namespace: oaicp

@@ -1,0 +1,16 @@
+apiVersion: config.porch.kpt.dev/v1alpha2
+kind: PackageVariantSet
+metadata:
+  name: oai-operators
+spec:
+  upstream:
+    repo: oai-packages
+    package: oai-operators
+    revision: master
+  targets:
+  - objectSelector:
+      apiVersion: infra.nephio.org/v1alpha1
+      kind: WorkloadCluster
+    template:
+      annotations:
+        approval.nephio.org/policy: initial

@@ -1,0 +1,201 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: oai-gnb-sa
+  namespace: oai5g-ran
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oai-gnb-configmap
+  namespace: oai5g-ran
+data:
+  amfIpAddress: "172.2.1.254"
+  gnbName: "oai-gnb-rfsim"
+  gnbNgaIfName: "n2"
+  gnbNgaIpAddress: "172.2.1.253/24"
+  gnbNguIfName: "n2"
+  gnbNguIpAddress: "172.2.1.253/24"
+  mcc: "001"
+  mnc: "01"
+  mncLength: "2"
+  mountConfig: "false"
+  nssaiSd0: "ffffff"
+  nssaiSst: "1"
+  rfSimulator: "server"
+  sdrAddrs: "serial=XXXXXXX"
+  tac: "1"
+  threadParallelConfig: "PARALLEL_SINGLE_THREAD"
+  timeZone: "Europe/Paris"
+  useAdditionalOptions: "--sa -E --rfsim --log_config.global_log_options level,nocolor,time"
+  useSATddMono: "yes"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oai-gnb
+  namespace: oai5g-ran
+  labels:
+    app.kubernetes.io/name: oai-gnb
+    app.kubernetes.io/instance: oai-gnb
+    app.kubernetes.io/version: "develop"
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: n3
+      port: 2152
+      targetPort: 2152
+      protocol: UDP
+    - name: n2
+      port: 36412
+      targetPort: 36412
+      protocol: SCTP
+  selector:
+    app.kubernetes.io/name: oai-gnb
+    app.kubernetes.io/instance: oai-gnb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oaignb
+  namespace: oai5g-ran
+  labels:
+    app.kubernetes.io/name: oai-gnb
+    app.kubernetes.io/instance: oai-gnb
+    app.kubernetes.io/version: "develop"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: oai-gnb
+      app.kubernetes.io/instance: oai-gnb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: oai-gnb
+        app.kubernetes.io/instance: oai-gnb
+        app: oai-gnb
+      annotations:
+        k8s.v1.cni.cncf.io/networks: "[{\n\n\n\n\n\n\n       \"name\": \"oai-gnb-n2\",\n       \"interface\": \"n2\"\n}]"
+    spec:
+      securityContext:
+        runAsGroup: 0
+        runAsUser: 0
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: gnb
+        image: "docker.io/oaisoftwarealliance/oai-gnb:2023.w19"
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
+          # capabilities:
+          #    add:
+          #     - NET_ADMIN
+          #    drop:
+          #     - ALL
+        ports:
+        - containerPort: 2152
+          name: n3
+          protocol: UDP
+        - containerPort: 36412
+          name: n2
+          protocol: SCTP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        - name: RFSIMULATOR
+          value: server
+        - name: USE_ADDITIONAL_OPTIONS
+          value: --sa -E --rfsim --log_config.global_log_options level,nocolor,time
+        - name: USE_SA_TDD_MONO
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: useSATddMono
+        - name: GNB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: gnbName
+        - name: MCC
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: mcc
+        - name: MNC
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: mnc
+        - name: MNC_LENGTH
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: mncLength
+        - name: TAC
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: tac
+        - name: NSSAI_SST
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: nssaiSst
+        - name: NSSAI_SD0
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: nssaiSd0
+        - name: AMF_IP_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: amfIpAddress
+        - name: GNB_NGA_IF_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: gnbNgaIfName
+        - name: GNB_NGA_IP_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: gnbNgaIpAddress
+        - name: GNB_NGU_IF_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: gnbNguIfName
+        - name: GNB_NGU_IP_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: gnbNguIpAddress
+        - name: THREAD_PARALLEL_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: threadParallelConfig
+        - name: SDR_ADDRS
+          valueFrom:
+            configMapKeyRef:
+              name: oai-gnb-configmap
+              key: sdrAddrs
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      serviceAccountName: oai-gnb-sa
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: oai-gnb-n2
+  namespace: oai5g-ran
+spec:
+  config: '{ "cniVersion": "0.3.1", "type": "macvlan", "master":"eth1.4", "mode": "bridge", "ipam": { "type": "static", "addresses": [ { "address":"172.2.1.253/24" } ] ,"routes":[{"dst":"172.2.0.0/16","gw":"172.2.1.1"},{"dst":"172.3.0.0/16","gw":"172.2.1.1"}] } }'

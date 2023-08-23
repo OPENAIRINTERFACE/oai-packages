@@ -1,0 +1,171 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql
+  namespace: oaicp
+  labels:
+    app: mysql
+    chart: "mysql-8.0.31"
+    release: "mysql"
+    heritage: "Helm"
+type: Opaque
+data:
+  mysql-root-password: "bGludXg="
+  mysql-password: "dGVzdA=="
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initialization
+  namespace: oaicp
+data:
+  oai_db-basic.sql: "-- phpMyAdmin SQL Dump\n-- version 5.1.0\n-- https://www.phpmyadmin.net/\n--\n-- Host: 172.16.200.10:3306\n-- Generation Time: Mar 22, 2021 at 10:31 AM\n-- Server version: 5.7.33\n-- PHP Version: 7.4.15\n\nSET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\";\nSTART TRANSACTION;\nSET time_zone = \"+00:00\";\n\n\n/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;\n/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;\n/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;\n/*!40101 SET NAMES utf8mb4 */;\n\n--\n-- Database: `oai_db`\n--\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `AccessAndMobilitySubscriptionData`\n--\n\nCREATE TABLE `AccessAndMobilitySubscriptionData` (\n  `ueid` varchar(15) NOT NULL,\n  `servingPlmnid` varchar(15) NOT NULL,\n  `supportedFeatures` varchar(50) DEFAULT NULL,\n  `gpsis` json DEFAULT NULL,\n  `internalGroupIds` json DEFAULT NULL,\n  `sharedVnGroupDataIds` json DEFAULT NULL,\n  `subscribedUeAmbr` json DEFAULT NULL,\n  `nssai` json DEFAULT NULL,\n  `ratRestrictions` json DEFAULT NULL,\n  `forbiddenAreas` json DEFAULT NULL,\n  `serviceAreaRestriction` json DEFAULT NULL,\n  `coreNetworkTypeRestrictions` json DEFAULT NULL,\n  `rfspIndex` int(10) DEFAULT NULL,\n  `subsRegTimer` int(10) DEFAULT NULL,\n  `ueUsageType` int(10) DEFAULT NULL,\n  `mpsPriority` tinyint(1) DEFAULT NULL,\n  `mcsPriority` tinyint(1) DEFAULT NULL,\n  `activeTime` int(10) DEFAULT NULL,\n  `sorInfo` json DEFAULT NULL,\n  `sorInfoExpectInd` tinyint(1) DEFAULT NULL,\n  `sorafRetrieval` tinyint(1) DEFAULT NULL,\n  `sorUpdateIndicatorList` json DEFAULT NULL,\n  `upuInfo` json DEFAULT NULL,\n  `micoAllowed` tinyint(1) DEFAULT NULL,\n  `sharedAmDataIds` json DEFAULT NULL,\n  `odbPacketServices` json DEFAULT NULL,\n  `serviceGapTime` int(10) DEFAULT NULL,\n  `mdtUserConsent` json DEFAULT NULL,\n  `mdtConfiguration` json DEFAULT NULL,\n  `traceData` json DEFAULT NULL,\n  `cagData` json DEFAULT NULL,\n  `stnSr` varchar(50) DEFAULT NULL,\n  `cMsisdn` varchar(50) DEFAULT NULL,\n  `nbIoTUePriority` int(10) DEFAULT NULL,\n  `nssaiInclusionAllowed` tinyint(1) DEFAULT NULL,\n  `rgWirelineCharacteristics` varchar(50) DEFAULT NULL,\n  `ecRestrictionDataWb` json DEFAULT NULL,\n  `ecRestrictionDataNb` tinyint(1) DEFAULT NULL,\n  `expectedUeBehaviourList` json DEFAULT NULL,\n  `primaryRatRestrictions` json DEFAULT NULL,\n  `secondaryRatRestrictions` json DEFAULT NULL,\n  `edrxParametersList` json DEFAULT NULL,\n  `ptwParametersList` json DEFAULT NULL,\n  `iabOperationAllowed` tinyint(1) DEFAULT NULL,\n  `wirelineForbiddenAreas` json DEFAULT NULL,\n  `wirelineServiceAreaRestriction` json DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `Amf3GppAccessRegistration`\n--\n\nCREATE TABLE `Amf3GppAccessRegistration` (\n  `ueid` varchar(15) NOT NULL,\n  `amfInstanceId` varchar(50) NOT NULL,\n  `supportedFeatures` varchar(50) DEFAULT NULL,\n  `purgeFlag` tinyint(1) DEFAULT NULL,\n  `pei` varchar(50) DEFAULT NULL,\n  `imsVoPs` json DEFAULT NULL,\n  `deregCallbackUri` varchar(50) NOT NULL,\n  `amfServiceNameDereg` json DEFAULT NULL,\n  `pcscfRestorationCallbackUri` varchar(50) DEFAULT NULL,\n  `amfServiceNamePcscfRest` json DEFAULT NULL,\n  `initialRegistrationInd` tinyint(1) DEFAULT NULL,\n  `guami` json NOT NULL,\n  `backupAmfInfo` json DEFAULT NULL,\n  `drFlag` tinyint(1) DEFAULT NULL,\n  `ratType` json NOT NULL,\n  `urrpIndicator` tinyint(1) DEFAULT NULL,\n  `amfEeSubscriptionId` varchar(50) DEFAULT NULL,\n  `epsInterworkingInfo` json DEFAULT NULL,\n  `ueSrvccCapability` tinyint(1) DEFAULT NULL,\n  `registrationTime` varchar(50) DEFAULT NULL,\n  `vgmlcAddress` json DEFAULT NULL,\n  `contextInfo` json DEFAULT NULL,\n  `noEeSubscriptionInd` tinyint(1) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `AuthenticationStatus`\n--\n\nCREATE TABLE `AuthenticationStatus` (\n  `ueid` varchar(20) NOT NULL,\n  `nfInstanceId` varchar(50) NOT NULL,\n  `success` tinyint(1) NOT NULL,\n  `timeStamp` varchar(50) NOT NULL,\n  `authType` varchar(25) NOT NULL,\n  `servingNetworkName` varchar(50) NOT NULL,\n  `authRemovalInd` tinyint(1) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `AuthenticationSubscription`\n--\n\nCREATE TABLE `AuthenticationSubscription` (\n  `ueid` varchar(20) NOT NULL,\n  `authenticationMethod` varchar(25) NOT NULL,\n  `encPermanentKey` varchar(50) DEFAULT NULL,\n  `protectionParameterId` varchar(50) DEFAULT NULL,\n  `sequenceNumber` json DEFAULT NULL,\n  `authenticationManagementField` varchar(50) DEFAULT NULL,\n  `algorithmId` varchar(50) DEFAULT NULL,\n  `encOpcKey` varchar(50) DEFAULT NULL,\n  `encTopcKey` varchar(50) DEFAULT NULL,\n  `vectorGenerationInHss` tinyint(1) DEFAULT NULL,\n  `n5gcAuthMethod` varchar(15) DEFAULT NULL,\n  `rgAuthenticationInd` tinyint(1) DEFAULT NULL,\n  `supi` varchar(20) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n--\n-- Dumping data for table `AuthenticationSubscription`\n--\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000100', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000100');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000101', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000101');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000102', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000102');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000103', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000103');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000104', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000104');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000105', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000105');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000106', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000106');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000107', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000107');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000108', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000108');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000109', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000109');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000110', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000110');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000111', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000111');\nINSERT INTO `AuthenticationSubscription` (`ueid`, `authenticationMethod`, `encPermanentKey`, `protectionParameterId`, `sequenceNumber`, `authenticationManagementField`, `algorithmId`, `encOpcKey`, `encTopcKey`, `vectorGenerationInHss`, `n5gcAuthMethod`, `rgAuthenticationInd`, `supi`) VALUES\n('001010000000112', '5G_AKA', 'fec86ba6eb707ed08905757b1bb44b8f', 'fec86ba6eb707ed08905757b1bb44b8f', '{\\\"sqn\\\": \\\"000000000020\\\", \\\"sqnScheme\\\": \\\"NON_TIME_BASED\\\", \\\"lastIndexes\\\": {\\\"ausf\\\": 0}}', '8000', 'milenage', 'C42449363BBAD02B66D16BC975D77CC1', NULL, NULL, NULL, NULL, '001010000000112');\n\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `SdmSubscriptions`\n--\n\nCREATE TABLE `SdmSubscriptions` (\n  `ueid` varchar(15) NOT NULL,\n  `subsId` int(10) UNSIGNED NOT NULL,\n  `nfInstanceId` varchar(50) NOT NULL,\n  `implicitUnsubscribe` tinyint(1) DEFAULT NULL,\n  `expires` varchar(50) DEFAULT NULL,\n  `callbackReference` varchar(50) NOT NULL,\n  `amfServiceName` json DEFAULT NULL,\n  `monitoredResourceUris` json NOT NULL,\n  `singleNssai` json DEFAULT NULL,\n  `dnn` varchar(50) DEFAULT NULL,\n  `subscriptionId` varchar(50) DEFAULT NULL,\n  `plmnId` json DEFAULT NULL,\n  `immediateReport` tinyint(1) DEFAULT NULL,\n  `report` json DEFAULT NULL,\n  `supportedFeatures` varchar(50) DEFAULT NULL,\n  `contextInfo` json DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `SessionManagementSubscriptionData`\n--\n\nCREATE TABLE `SessionManagementSubscriptionData` (\n  `ueid` varchar(15) NOT NULL,\n  `servingPlmnid` varchar(15) NOT NULL,\n  `singleNssai` json NOT NULL,\n  `dnnConfigurations` json DEFAULT NULL,\n  `internalGroupIds` json DEFAULT NULL,\n  `sharedVnGroupDataIds` json DEFAULT NULL,\n  `sharedDnnConfigurationsId` varchar(50) DEFAULT NULL,\n  `odbPacketServices` json DEFAULT NULL,\n  `traceData` json DEFAULT NULL,\n  `sharedTraceDataId` varchar(50) DEFAULT NULL,\n  `expectedUeBehavioursList` json DEFAULT NULL,\n  `suggestedPacketNumDlList` json DEFAULT NULL,\n  `3gppChargingCharacteristics` varchar(50) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `SmfRegistrations`\n--\n\nCREATE TABLE `SmfRegistrations` (\n  `ueid` varchar(15) NOT NULL,\n  `subpduSessionId` int(10) NOT NULL,\n  `smfInstanceId` varchar(50) NOT NULL,\n  `smfSetId` varchar(50) DEFAULT NULL,\n  `supportedFeatures` varchar(50) DEFAULT NULL,\n  `pduSessionId` int(10) NOT NULL,\n  `singleNssai` json NOT NULL,\n  `dnn` varchar(50) DEFAULT NULL,\n  `emergencyServices` tinyint(1) DEFAULT NULL,\n  `pcscfRestorationCallbackUri` varchar(50) DEFAULT NULL,\n  `plmnId` json NOT NULL,\n  `pgwFqdn` varchar(50) DEFAULT NULL,\n  `epdgInd` tinyint(1) DEFAULT NULL,\n  `deregCallbackUri` varchar(50) DEFAULT NULL,\n  `registrationReason` json DEFAULT NULL,\n  `registrationTime` varchar(50) DEFAULT NULL,\n  `contextInfo` json DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n-- --------------------------------------------------------\n\n--\n-- Table structure for table `SmfSelectionSubscriptionData`\n--\n\nCREATE TABLE `SmfSelectionSubscriptionData` (\n  `ueid` varchar(15) NOT NULL,\n  `servingPlmnid` varchar(15) NOT NULL,\n  `supportedFeatures` varchar(50) DEFAULT NULL,\n  `subscribedSnssaiInfos` json DEFAULT NULL,\n  `sharedSnssaiInfosId` varchar(50) DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;\n\n--\n-- Indexes for dumped tables\n--\n\n--\n-- Indexes for table `AccessAndMobilitySubscriptionData`\n--\nALTER TABLE `AccessAndMobilitySubscriptionData`\n  ADD PRIMARY KEY (`ueid`,`servingPlmnid`) USING BTREE;\n\n--\n-- Indexes for table `Amf3GppAccessRegistration`\n--\nALTER TABLE `Amf3GppAccessRegistration`\n  ADD PRIMARY KEY (`ueid`);\n\n--\n-- Indexes for table `AuthenticationStatus`\n--\nALTER TABLE `AuthenticationStatus`\n  ADD PRIMARY KEY (`ueid`);\n\n--\n-- Indexes for table `AuthenticationSubscription`\n--\nALTER TABLE `AuthenticationSubscription`\n  ADD PRIMARY KEY (`ueid`);\n\n--\n-- Indexes for table `SdmSubscriptions`\n--\nALTER TABLE `SdmSubscriptions`\n  ADD PRIMARY KEY (`subsId`,`ueid`) USING BTREE;\n\n--\n-- Indexes for table `SessionManagementSubscriptionData`\n--\nALTER TABLE `SessionManagementSubscriptionData`\n  ADD PRIMARY KEY (`ueid`,`servingPlmnid`) USING BTREE;\n\n--\n-- Indexes for table `SmfRegistrations`\n--\nALTER TABLE `SmfRegistrations`\n  ADD PRIMARY KEY (`ueid`,`subpduSessionId`) USING BTREE;\n\n--\n-- Indexes for table `SmfSelectionSubscriptionData`\n--\nALTER TABLE `SmfSelectionSubscriptionData`\n  ADD PRIMARY KEY (`ueid`,`servingPlmnid`) USING BTREE;\n\n--\n-- AUTO_INCREMENT for dumped tables\n--\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES\n('001010000000100', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"internet\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 1,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}},\\\"ims\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4V6\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 2,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES\n('001010000000101', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 1,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}},\\\"ims\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4V6\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 2,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES\n('001010000000102', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 1,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"},\\\"staticIpAddress\\\":[{\\\"ipv4Addr\\\": \\\"12.1.1.102\\\"}]},\\\"ims\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4V6\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 2,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES\n('001010000000103', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 1,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"},\\\"staticIpAddress\\\":[{\\\"ipv4Addr\\\": \\\"12.1.1.103\\\"}]},\\\"ims\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4V6\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 2,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES\n('001010000000104', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 1,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"},\\\"staticIpAddress\\\":[{\\\"ipv4Addr\\\": \\\"12.1.1.104\\\"}]},\\\"ims\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4V6\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 2,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES\n('001010000000105', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 1,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"},\\\"staticIpAddress\\\":[{\\\"ipv4Addr\\\": \\\"12.1.1.105\\\"}]},\\\"ims\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4V6\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 2,\\\"arp\\\":{\\\"priorityLevel\\\": 15,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\n\n-- Dynamic IPADDRESS Allocation\n\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES \n('001010000000106', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 6,\\\"arp\\\":{\\\"priorityLevel\\\": 1,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"NOT_PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES \n('001010000000107', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 6,\\\"arp\\\":{\\\"priorityLevel\\\": 1,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"NOT_PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES \n('001010000000109', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 6,\\\"arp\\\":{\\\"priorityLevel\\\": 1,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"NOT_PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES \n('001010000000110', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 6,\\\"arp\\\":{\\\"priorityLevel\\\": 1,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"NOT_PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES \n('001010000000111', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 6,\\\"arp\\\":{\\\"priorityLevel\\\": 1,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"NOT_PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\nINSERT INTO `SessionManagementSubscriptionData` (`ueid`, `servingPlmnid`, `singleNssai`, `dnnConfigurations`) VALUES \n('001010000000112', '00101', '{\\\"sst\\\": 1, \\\"sd\\\": \\\"16777215\\\"}','{\\\"oai\\\":{\\\"pduSessionTypes\\\":{ \\\"defaultSessionType\\\": \\\"IPV4\\\"},\\\"sscModes\\\": {\\\"defaultSscMode\\\": \\\"SSC_MODE_1\\\"},\\\"5gQosProfile\\\": {\\\"5qi\\\": 6,\\\"arp\\\":{\\\"priorityLevel\\\": 1,\\\"preemptCap\\\": \\\"NOT_PREEMPT\\\",\\\"preemptVuln\\\":\\\"NOT_PREEMPTABLE\\\"},\\\"priorityLevel\\\":1},\\\"sessionAmbr\\\":{\\\"uplink\\\":\\\"1000Mbps\\\", \\\"downlink\\\":\\\"1000Mbps\\\"}}}');\n\n\n\n--\n-- AUTO_INCREMENT for table `SdmSubscriptions`\n--\nALTER TABLE `SdmSubscriptions`\n  MODIFY `subsId` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;\nCOMMIT;\n\n/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;\n/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;\n/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;\n\n"
+---
+# Source: mysql/templates/pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: mysql
+  namespace: oaicp
+  labels:
+    app: mysql
+    chart: "mysql-8.0.31"
+    release: "mysql"
+    heritage: "Helm"
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "8Gi"
+---
+# Source: mysql/templates/svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: oaicp
+  labels:
+    app: mysql
+    chart: "mysql-8.0.31"
+    release: "mysql"
+    heritage: "Helm"
+spec:
+  type: ClusterIP
+  ports:
+  - name: mysql
+    port: 3306
+    targetPort: mysql
+  selector:
+    app: mysql
+---
+# Source: mysql/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: oaicp
+  labels:
+    app: mysql
+    chart: "mysql-8.0.31"
+    app.kubernetes.io/instance: "mysql"
+    heritage: "Helm"
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mysql
+      app.kubernetes.io/instance: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+        app.kubernetes.io/instance: mysql
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      serviceAccountName: default
+      initContainers:
+        - name: "remove-lost-found"
+          image: "busybox:latest"
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+          command: ["rm", "-fr", "/var/lib/mysql/lost+found"]
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+      # - name: do-something
+      #   image: busybox
+      #   command: ['do', 'something']
+      containers:
+        - name: mysql
+          image: "docker.io/mysql:5.7"
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: mysql-root-password
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: mysql-password
+            - name: MYSQL_USER
+              value: "test"
+            - name: MYSQL_DATABASE
+              value: "oai_db"
+          ports:
+            - name: mysql
+              containerPort: 3306
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - "mysqladmin ping -u root -p${MYSQL_ROOT_PASSWORD}"
+            initialDelaySeconds: 50
+            periodSeconds: 15
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - "mysqladmin ping -u root -p${MYSQL_ROOT_PASSWORD}"
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+            - name: migrations
+              mountPath: /docker-entrypoint-initdb.d
+              # - name: extras
+              #   mountPath: /usr/share/extras
+              #   readOnly: true
+      volumes:
+        - name: migrations
+          configMap:
+            name: mysql-initialization
+        - name: data
+          persistentVolumeClaim:
+            claimName: mysql
+            # - name: extras
+            #   emptyDir: {}
+      # - name: extras
+      #   emptyDir: {}
