@@ -6,22 +6,22 @@ KPT package for oai-nr-ue
 
 ### Fetch the package
 
-`kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] oai-nr-ue`
+`kpt pkg get REPO_URI[.git]/PKG_PATH[@VERSION] oai-nr-ue-2`
 
 Details: https://kpt.dev/reference/cli/pkg/get/
 
 ### View package content
 
-`kpt pkg tree oai-nr-ue`
+`kpt pkg tree oai-nr-ue-2`
 
 Details: https://kpt.dev/reference/cli/pkg/tree/
 
 ### Apply the package
 
 ```
-kpt fn render oai-nr-ue
-kpt live init oai-nr-ue 
-kpt live apply oai-nr-ue --reconcile-timeout=2m --output=table 
+kpt fn render oai-nr-ue-2
+kpt live init oai-nr-ue-2
+kpt live apply oai-nr-ue-2 --reconcile-timeout=2m --output=table 
 ```
 
 In case you want to install it on a particular cluster then use `--context` flag

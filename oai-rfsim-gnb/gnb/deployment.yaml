@@ -1,0 +1,131 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oairfsimgnb
+  labels:
+    app.kubernetes.io/name: oairfsimgnb
+    app.kubernetes.io/instance: oairfsimgnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: oairfsimgnb
+      app.kubernetes.io/instance: oai-gnb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: oairfsimgnb
+        app.kubernetes.io/instance: oairfsimgnb
+        app: oairfsimgnb
+    spec:
+      securityContext:
+        runAsGroup: 0
+        runAsUser: 0
+      containers:
+      - name: oairfsimgnb
+        image: "docker.io/oaisoftwarealliance/oai-gnb:2023.w19"
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
+          # capabilities:
+          #    add:
+          #     - NET_ADMIN
+          #    drop:
+          #     - ALL
+        ports:
+        - containerPort: 2152
+          name: n3
+          protocol: UDP
+        - containerPort: 36412
+          name: n2
+          protocol: SCTP
+        env:
+        - name: TZ
+          value: Europe/Paris
+        - name: RFSIMULATOR
+          value: server
+        - name: USE_ADDITIONAL_OPTIONS
+          value: --sa -E --rfsim --log_config.global_log_options level,nocolor,time
+        - name: USE_SA_TDD_MONO
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: useSATddMono
+        - name: GNB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: gnbName
+        - name: MCC
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: mcc
+        - name: MNC
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: mnc
+        - name: MNC_LENGTH
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: mncLength
+        - name: TAC
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: tac
+        - name: NSSAI_SST
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: nssaiSst
+        - name: NSSAI_SD0
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: nssaiSd0
+        - name: AMF_IP_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: amfIpAddress
+        - name: GNB_NGA_IF_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: gnbNgaIfName
+        - name: GNB_NGA_IP_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: gnbNgaIpAddress
+        - name: GNB_NGU_IF_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: gnbNguIfName
+        - name: GNB_NGU_IP_ADDRESS
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: gnbNguIpAddress
+        - name: THREAD_PARALLEL_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: threadParallelConfig
+        - name: SDR_ADDRS
+          valueFrom:
+            configMapKeyRef:
+              name: oairfsimgnb
+              key: sdrAddrs
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      serviceAccountName: oairfsimgnb-sa
+      terminationGracePeriodSeconds: 5

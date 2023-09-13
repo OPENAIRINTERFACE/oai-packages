@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oainrue2
+  labels:
+    app.kubernetes.io/name: oainrue2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: oainrue2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: oainrue2
+      annotations:
+    spec:
+      securityContext:
+        runAsGroup: 0
+        runAsUser: 0
+      containers:
+      - name: nrue
+        image: "docker.io/oaisoftwarealliance/oai-nr-ue:2023.w19"
+        securityContext:
+          privileged: true
+        env:
+        - name: TZ
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: timeZone
+        - name: RFSIMULATOR
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: rfSimulator
+        - name: FULL_IMSI
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: fullImsi
+        - name: FULL_KEY
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: fullKey
+        - name: OPC
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: opc
+        - name: DNN
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: dnn
+        - name: NSSAI_SST
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: nssaiSst
+        - name: NSSAI_SD
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: nssaiSd
+        - name: USE_ADDITIONAL_OPTIONS
+          valueFrom:
+            configMapKeyRef:
+              name: oainrue2
+              key: useAdditionalOptions
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      serviceAccountName: oainrue1
+      terminationGracePeriodSeconds: 5

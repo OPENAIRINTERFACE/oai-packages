@@ -1,0 +1,21 @@
+apiVersion: fn.kpt.dev/v1alpha1
+kind: StarlarkRun
+metadata: # kpt-merge: /set-annotation
+  name: set-configuration
+  annotations:
+    internal.kpt.dev/upstream-identifier: fn.kpt.dev|StarlarkRun|default|set-configuration
+source: |-
+  amf_ip_address = "127.0.0.1"
+  gnb_n2_ip_address = "127.0.0.1"
+  gnb_n3_ip_address = "127.0.0.1"
+  for resource in ctx.resource_list["items"]:
+    if resource.get("kind") == "IPClaim" and resource["metadata"]["name"] == "amf-regional-n2-ipv4":
+      amf_ip_address = resource["status"]["prefix"].split('/')[0]
+    if resource.get("kind") == "IPClaim" and resource["metadata"]["name"] == "oairfsimgnb-regional-n2-ipv4":
+      gnb_n2_ip_address = resource["status"]["prefix"]
+    if resource.get("kind") == "IPClaim" and resource["metadata"]["name"] == "oairfsimgnb-regional-n3-ipv4":
+      gnb_n3_ip_address = resource["status"]["prefix"]
+    if resource.get("kind") == "ConfigMap" and resource["metadata"]["name"] == "oairfsimgnb":
+      resource["data"]["amfIpAddress"] = amf_ip_address
+      resource["data"]["gnbNgaIpAddress"] = gnb_n2_ip_address
+      resource["data"]["gnbNguIpAddress"] = gnb_n3_ip_address

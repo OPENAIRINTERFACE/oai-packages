@@ -1,0 +1,16 @@
+apiVersion: config.porch.kpt.dev/v1alpha1
+kind: PackageVariant
+metadata:
+  name: regional-oainrue1
+spec:
+  upstream:
+    repo: oai-packages
+    package: oai-nr-ue-1
+    revision: develop
+  downstream:
+    repo: regional
+    package: oai-nr-ue-1
+  annotations:
+    approval.nephio.org/policy: initial
+  injectors:
+  - name: regional

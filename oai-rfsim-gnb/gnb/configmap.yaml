@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oairfsimgnb
+data:
+  amfIpAddress: "172.2.1.254"
+  gnbName: "oai-gnb-rfsim"
+  gnbNgaIfName: "n2"
+  gnbNgaIpAddress: "172.2.1.253/24"
+  gnbNguIfName: "n2"
+  gnbNguIpAddress: "172.2.1.253/24"
+  mcc: "001"
+  mnc: "01"
+  mncLength: "2"
+  mountConfig: "false"
+  nssaiSd0: "ffffff"
+  nssaiSst: "1"
+  rfSimulator: "server"
+  sdrAddrs: "serial=XXXXXXX"
+  tac: "1"
+  threadParallelConfig: "PARALLEL_SINGLE_THREAD"
+  timeZone: "Europe/Paris"
+  useAdditionalOptions: "--sa -E --rfsim --log_config.global_log_options level,nocolor,time"
+  useSATddMono: "yes"
