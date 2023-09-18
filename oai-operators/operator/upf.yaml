@@ -21,7 +21,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: oaiops
+  namespace: oai-operators
   name: oai-upf-operator
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -71,13 +71,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: oai-upf-operator
-    namespace: oaiops
+    namespace: oai-operators
 ## In case you want to restrict to a namespace uncomment this role and remove the rights from cluster role
 #---
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: Role
 # metadata:
-#   namespace: oaiops
+#   namespace: oai-operators
 #   name: oai-upf-operator-role
 # rules:
 #   # Framework: posting the events about the handlers progress/errors.
@@ -97,7 +97,7 @@ subjects:
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: RoleBinding
 # metadata:
-#   namespace: oaiops
+#   namespace: oai-operators
 #   name: oai-upf-operator-rolebinding-namespaced
 # roleRef:
 #   apiGroup: rbac.authorization.k8s.io
@@ -111,7 +111,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-upf-op-conf
-  namespace: oaiops
+  namespace: oai-operators
 data:
   upf.yaml: |
     nad: 
@@ -145,7 +145,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-upf-nf-conf
-  namespace: oaiops
+  namespace: oai-operators
 data:
   upf.yaml: |
     ############# Common configuration
@@ -224,7 +224,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oai-upf-controller
-  namespace: oaiops
+  namespace: oai-operators
   labels:
     app.kubernetes.io/name: oai-upf-controller
 spec:

@@ -3,3 +3,9 @@ kind: UDRDeployment
 metadata:
   name: udr-example
   namespace: oaicp
+spec:
+  configRefs:
+  - name: udr-config
+    namespace: oaicp
+    apiVersion: ref.nephio.org/v1alpha1
+    kind: Config

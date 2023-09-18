@@ -3,3 +3,9 @@ kind: UPFDeployment
 metadata:
   name: upf-example
   namespace: upf-example
+spec:
+  configRefs:
+  - name: upf-edge01-config
+    namespace: oai-upf
+    apiVersion: ref.nephio.org/v1alpha1
+    kind: Config

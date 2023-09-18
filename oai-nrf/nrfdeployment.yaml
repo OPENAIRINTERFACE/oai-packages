@@ -3,3 +3,9 @@ kind: NRFDeployment
 metadata:
   name: nrf-example
   namespace: oaicp
+spec:
+  configRefs:
+  - name: nrf-config
+    namespace: oaicp
+    apiVersion: ref.nephio.org/v1alpha1
+    kind: Config

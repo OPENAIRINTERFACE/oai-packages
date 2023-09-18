@@ -3,3 +3,9 @@ kind: AUSFDeployment
 metadata:
   name: ausf-example
   namespace: oaicp
+spec:
+  configRefs:
+  - name: ausf-config
+    namespace: oaicp
+    apiVersion: ref.nephio.org/v1alpha1
+    kind: Config

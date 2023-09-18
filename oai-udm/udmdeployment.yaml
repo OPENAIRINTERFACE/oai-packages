@@ -3,3 +3,9 @@ kind: UDMDeployment
 metadata:
   name: udm-example
   namespace: oai-cp
+spec:
+  configRefs:
+  - name: udm-config
+    namespace: oaicp
+    apiVersion: ref.nephio.org/v1alpha1
+    kind: Config
