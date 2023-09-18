@@ -1,0 +1,27 @@
+apiVersion: req.nephio.org/v1alpha1
+kind: Dependency
+metadata:
+  name: upf
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    specializer.nephio.org/owner: workload.nephio.org/v1alpha1.SMFDeployment.smf-example
+    specializer.nephio.org/namespace: example
+spec:
+  packageName: oai-upf-edge01
+  injectors:
+  - apiVersion: workload.nephio.org/v1alpha1
+    kind: UPFDeployment
+---
+apiVersion: req.nephio.org/v1alpha1
+kind: Dependency
+metadata:
+  name: upf
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    specializer.nephio.org/owner: workload.nephio.org/v1alpha1.SMFDeployment.smf-example
+    specializer.nephio.org/namespace: example
+spec:
+  packageName: oai-upf-edge02
+  injectors:
+  - apiVersion: workload.nephio.org/v1alpha1
+    kind: UPFDeployment

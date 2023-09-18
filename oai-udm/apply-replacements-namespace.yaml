@@ -14,3 +14,7 @@ replacements:
       kind: Interface
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
+  - select:
+      kind: Config
+    fieldPaths:
+    - metadata.annotations.[specializer.nephio.org/namespace]

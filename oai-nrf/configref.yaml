@@ -1,0 +1,15 @@
+apiVersion: ref.nephio.org/v1alpha1
+kind: Config
+metadata:
+  name: nrf-config
+  namespace: nrf-example
+spec:
+  config:
+    apiVersion: workload.nephio.org/v1alpha1
+    kind: NRFDeployment
+    metadata:
+      name: nrf-config
+      namespace: oaicp
+    spec:
+      logLevel: info
+      image: 'docker.io/oaisoftwarealliance/oai-nrf:develop'

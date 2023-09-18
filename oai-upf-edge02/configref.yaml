@@ -1,0 +1,21 @@
+apiVersion: ref.nephio.org/v1alpha1
+kind: Config
+metadata:
+  name: upf-edge02-config
+  namespace: oai-upf
+spec:
+  config:
+    apiVersion: workload.nephio.org/v1alpha1
+    kind: UPFDeployment
+    metadata:
+      name: upf-edge02-config
+      namespace: oai-upf
+    spec:
+      logLevel: info
+      image: 'docker.io/oaisoftwarealliance/oai-upf:develop'
+      fqdn:
+        nrf: 'nrf-regional'
+        smf: 'smf-regional'
+      nssai:
+        - sst: 1
+          sd: '0xFFFFFF'
