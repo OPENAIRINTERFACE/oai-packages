@@ -21,3 +21,5 @@ pipeline:
     - image: docker.io/nephio/dnn-fn:v1.0.1
     - image: docker.io/nephio/interface-fn:v1.0.1
     - image: docker.io/nephio/upf-deploy-fn:v1.0.1
+    - image: gcr.io/kpt-fn/starlark:v0.4
+      configPath: config-fn.yaml
