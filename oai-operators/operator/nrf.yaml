@@ -181,12 +181,6 @@ spec:
       - name: nrf-controller
         image: "docker.io/arorasagar/oai-nrf-controller:develop"
         imagePullPolicy: Always
-        command:
-          - 'kopf' 
-          - 'run'
-          - '/root/.local/controller.py' 
-          - '--all-namespaces'
-          - '--verbose'
         env:
           - name: 'NF_TYPE'
             value: 'nrf'

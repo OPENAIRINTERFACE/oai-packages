@@ -4,5 +4,8 @@ metadata:
   name: kptfile.kpt.dev
   annotations:
     config.kubernetes.io/local-config: "true"
+  labels:
+    app.kubernetes.io/name: network-config
 data:
-  name: oai
+  namespace: oai
+  sitename: regional

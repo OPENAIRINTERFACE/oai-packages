@@ -1,0 +1,16 @@
+apiVersion: config.porch.kpt.dev/v1alpha1
+kind: PackageVariant
+metadata:
+  name: regional-skupper
+spec:
+  upstream:
+    repo: oai-packages
+    package: skupper-regional
+    revision: develop
+  downstream:
+    repo: regional
+    package: skupper
+  annotations:
+    approval.nephio.org/policy: initial
+  injectors:
+  - name: regional

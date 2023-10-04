@@ -20,15 +20,31 @@ Repository structure is below
 
 ```
 .
-├── database  		Kpt package for mysql
-├── oai-amf   		Kpt package for oai-amf
-├── oai-ausf  		Kpt package for oai-ausf
-├── oai-nrf		Kpt package for oai-nrf
-├── oai-operators	Kpt package for operators of oai-nfs
-├── oai-smf		Kpt package for oai-smf
-├── oai-udm		Kpt package for oai-udm
-├── oai-udr		Kpt package for oai-udr
-├── oai-upf		Kpt package for oai-upf
+├── database
+├── docs
+│   └── images
+├── oai-amf
+├── oai-ausf
+├── oai-nrf
+├── oai-nr-ue-1
+│   └── nrue
+├── oai-nr-ue-2
+│   └── nrue
+├── oai-operators
+│   ├── crds
+│   └── operator
+├── oai-repository
+├── oai-rfsim-gnb
+│   └── gnb
+├── oai-smf
+├── oai-udm
+├── oai-udr
+├── oai-upf-edge01
+├── oai-upf-edge02
+├── package-variant
+├── skupper-edge01
+├── skupper-edge02
+└── skupper-regional
 └── package-variant	Package variant for all nfs, database and operator
 ```
 

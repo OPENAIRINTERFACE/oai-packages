@@ -7,13 +7,17 @@ metadata:
 replacements:
 - source:
     kind: ConfigMap
-    name: kptfile.kpt.dev
-    fieldPath: data.name
+    name: namespace
+    fieldPath: data.namespace
   targets:
   - select:
       kind: Interface
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
+  - select:
+      kind: Namespace
+    fieldPaths:
+    - metadata.name
   - select:
       kind: Capacity
     fieldPaths:

@@ -3,9 +3,3 @@ kind: AMFDeployment
 metadata:
   name: amf-example
   namespace: amf-example
-spec:
-  configRefs:
-  - name: amf-config
-    namespace: oaicp
-    apiVersion: ref.nephio.org/v1alpha1
-    kind: Config

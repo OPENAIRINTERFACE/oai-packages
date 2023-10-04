@@ -3,9 +3,3 @@ kind: SMFDeployment
 metadata:
   name: smf-example
   namespace: smf-example
-spec:
-  configRefs:
-  - name: smf-config
-    namespace: oaicp
-    apiVersion: ref.nephio.org/v1alpha1
-    kind: Config

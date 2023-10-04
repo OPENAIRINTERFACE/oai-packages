@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: skupper-site
+  namespace: example
+data:
+  name: regional
+  console-authentication: unsecured
+  console: "true"
+  flow-collector: "true"
