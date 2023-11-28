@@ -11,7 +11,7 @@ replacements:
     fieldPath: spec.clusterName
   targets:
   - select:
-      kind: NRFDeployment
+      kind: NFDeployment
     fieldPaths:
     - metadata.name
     options:
@@ -19,13 +19,6 @@ replacements:
       index: 1
   - select:
       kind: Interface
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/owner]
-    options:
-      delimiter: '-'
-      index: 1
-  - select:
-      kind: Config
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/owner]
     options:

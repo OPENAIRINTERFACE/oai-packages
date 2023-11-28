@@ -6,4 +6,4 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   name: oairfsimgnb
-  namespace: oai5g-ran
+  namespace: oai-ran

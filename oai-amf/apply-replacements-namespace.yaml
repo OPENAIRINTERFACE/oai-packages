@@ -27,6 +27,6 @@ replacements:
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
   - select:
-      kind: Config
+      kind: NFConfig
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]

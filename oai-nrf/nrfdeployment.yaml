@@ -1,11 +1,5 @@
 apiVersion: workload.nephio.org/v1alpha1
-kind: NRFDeployment
+kind: NFDeployment
 metadata:
   name: nrf-example
-  namespace: oaicp
-spec:
-  configRefs:
-  - name: nrf-config
-    namespace: oaicp
-    apiVersion: ref.nephio.org/v1alpha1
-    kind: Config
+  namespace: nrf-example
