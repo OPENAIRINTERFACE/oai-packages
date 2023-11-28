@@ -6,7 +6,7 @@ spec:
   upstream:
     repo: oai-packages
     package: skupper-regional
-    revision: develop
+    revision: r2
   downstream:
     repo: regional
     package: skupper

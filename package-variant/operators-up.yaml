@@ -1,16 +1,16 @@
-apiVersion: config.porch.kpt.dev/v1alpha2
-kind: PackageVariantSet
+apiVersion: config.porch.kpt.dev/v1alpha1
+kind: PackageVariant
 metadata:
   name: oai-up-operators
 spec:
   upstream:
     repo: oai-packages
     package: oai-up-operators
-    revision: develop
-  targets:
-  - objectSelector:
-      apiVersion: infra.nephio.org/v1alpha1
-      kind: WorkloadCluster
-    template:
-      annotations:
-        approval.nephio.org/policy: initial
+    revision: r2
+  downstream:
+    repo: edge01
+    package: oai-up-operators
+  annotations:
+    approval.nephio.org/policy: initial
+  injectors:
+  - name: edge01

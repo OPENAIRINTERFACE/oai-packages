@@ -6,7 +6,7 @@ spec:
   upstream:
     repo: oai-packages
     package: oai-nr-ue
-    revision: develop
+    revision: r2
   downstream:
     repo: regional
     package: oai-nr-ue

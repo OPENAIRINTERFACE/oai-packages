@@ -6,7 +6,7 @@ spec:
   upstream:
     repo: oai-packages
     package: oai-upf-edge
-    revision: develop
+    revision: r2
   downstream:
     repo: edge01
     package: oai-upf

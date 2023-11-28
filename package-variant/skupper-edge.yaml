@@ -6,7 +6,7 @@ spec:
   upstream:
     repo: oai-packages
     package: skupper-edge02
-    revision: develop
+    revision: r2
   downstream:
     repo: edge02
     package: skupper
