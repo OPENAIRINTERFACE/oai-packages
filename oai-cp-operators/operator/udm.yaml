@@ -17,7 +17,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: oaiops
+  namespace: oai-operators
   name: oai-udm-operator
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -64,13 +64,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: oai-udm-operator
-    namespace: oaiops
+    namespace: oai-operators
 ## In case you want to restrict to a namespace uncomment this role and remove the rights from cluster role
 #---
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: Role
 # metadata:
-#   namespace: oaiops
+#   namespace: oai-operators
 #   name: oai-udm-operator-role
 # rules:
 #   # Framework: posting the events about the handlers progress/errors.
@@ -90,7 +90,7 @@ subjects:
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: RoleBinding
 # metadata:
-#   namespace: oaiops
+#   namespace: oai-operators
 #   name: oai-udm-operator-rolebinding-namespaced
 # roleRef:
 #   apiGroup: rbac.authorization.k8s.io
@@ -104,7 +104,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-udm-op-conf
-  namespace: oaiops
+  namespace: oai-operators
 data:
   udm.yaml: |
     ports: 
@@ -130,7 +130,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-udm-nf-conf
-  namespace: oaiops
+  namespace: oai-operators
 data:
   udm.yaml: |
     # Log level
@@ -166,7 +166,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oai-udm-controller
-  namespace: oaiops
+  namespace: oai-operators
   labels:
     app.kubernetes.io/name: oai-udm
 spec:

@@ -3,3 +3,5 @@ kind: NFDeployment
 metadata:
   name: nrf-example
   namespace: nrf-example
+spec:
+  provider: nrf.openairinterface.org

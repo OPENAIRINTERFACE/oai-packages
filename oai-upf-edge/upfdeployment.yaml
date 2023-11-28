@@ -4,6 +4,7 @@ metadata:
   name: upf-example
   namespace: upf-example
 spec:
+  provider: upf.openairinterface.org
   parametersRefs:
   - name: oai-upf-config
     apiVersion: workload.nephio.org/v1alpha1

@@ -3,3 +3,5 @@ kind: NFDeployment
 metadata:
   name: udm-example
   namespace: udm-example
+spec:
+  provider: udm.openairinterface.org

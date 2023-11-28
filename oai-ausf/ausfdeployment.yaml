@@ -3,3 +3,5 @@ kind: NFDeployment
 metadata:
   name: ausf-example
   namespace: ausf-example
+spec:
+  provider: ausf.openairinterface.org

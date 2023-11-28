@@ -4,6 +4,7 @@ metadata:
   name: smf-example
   namespace: smf-example
 spec:
+  provider: smf.openairinterface.org
   parametersRefs:
   - name: oai-smf-config
     apiVersion: workload.nephio.org/v1alpha1
