@@ -131,10 +131,10 @@ data:
     logLevel: info
     image: 'docker.io/oaisoftwarealliance/oai-amf:develop'
     fqdn:
-      smf: 'smf-core'
-      ausf: 'ausf-core'
-      nrf: 'nrf-core'
-      udm: 'udm-core'
+      smf: 'oai-smf'
+      ausf: 'oai-ausf'
+      nrf: 'oai-nrf'
+      udm: 'oai-udm'
 ---
 apiVersion: v1
 kind: ConfigMap

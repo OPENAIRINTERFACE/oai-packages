@@ -136,8 +136,8 @@ data:
     logLevel: debug
     image: 'docker.io/oaisoftwarealliance/oai-upf:develop'
     fqdn:
-      nrf: 'nrf-core.oaicp.svc.cluster.local'
-      smf: 'smf-core.oaicp.svc.cluster.local'
+      nrf: 'oai-nrf.oai-core.svc.cluster.local'
+      smf: 'oai-smf.oai-core.svc.cluster.local'
 ---
 apiVersion: v1
 kind: ConfigMap

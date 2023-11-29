@@ -123,7 +123,7 @@ data:
     logLevel: info
     image: 'docker.io/oaisoftwarealliance/oai-udr:develop'
     fqdn:
-      nrf: nrf-core
+      nrf: oai-nrf
     database:
       host: mysql
       type: mysql

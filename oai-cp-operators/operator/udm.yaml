@@ -123,8 +123,8 @@ data:
     logLevel: info
     image: 'docker.io/oaisoftwarealliance/oai-udm:develop'
     fqdn:
-      nrf: nrf-core
-      udr: udr-core
+      nrf: 'oai-nrf'
+      udr: 'oai-udr'
 ---
 apiVersion: v1
 kind: ConfigMap

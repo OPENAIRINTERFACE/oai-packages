@@ -126,9 +126,9 @@ data:
       mtu: 1500
       secondary: 1.1.1.1
     fqdn:
-      nrf: 'nrf-core'
-      udm: 'udm-core'
-      amf: 'amf-core'
+      nrf: 'oai-nrf'
+      udm: 'oai-udm'
+      amf: 'oai-amf'
     compute:
       req:
         cpu: '100m'
