@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oainrue
+  namespace: oairfsimgnb
   labels:
     app.kubernetes.io/name: oainrue
 spec:
