@@ -26,11 +26,12 @@ Repository structure is below
 ├── oai-amf
 ├── oai-ausf
 ├── oai-nrf
-├── oai-nr-ue-1
+├── oai-nr-ue
 │   └── nrue
-├── oai-nr-ue-2
-│   └── nrue
-├── oai-operators
+├── oai-cp-operators
+│   ├── crds
+│   └── operator
+├── oai-up-operators
 │   ├── crds
 │   └── operator
 ├── oai-repository
@@ -39,18 +40,16 @@ Repository structure is below
 ├── oai-smf
 ├── oai-udm
 ├── oai-udr
-├── oai-upf-edge01
-├── oai-upf-edge02
+├── oai-upf-edge
 ├── package-variant
-├── skupper-edge01
-├── skupper-edge02
+├── skupper-edge
 └── skupper-regional
 └── package-variant	Package variant for all nfs, database and operator
 ```
 
 The package-variants are designed to deploy below architecture
 
-![Deployment](./docs/images/oai-package-variant.jpg)
+![Deployment](./docs/images/oai-package-variant.jpg) **TO BE UPDATED FOR R2**
 
 **Disclaimer**
 
@@ -69,6 +68,8 @@ All the files are published under OAI license except the [crds](./oai-operators/
 
 ```bash
 git clone https://gitlab.eurecom.fr/nephio/oai-packages.git && cd oai-packages
+#TEMPORARY
+git checkout r2
 ```
 
 ## Step 1: Adding oai-packages repository in nephio repo list
@@ -112,10 +113,11 @@ mysql-5c6cb749bc-nsdsp   1/1     Running   0          47s
 ```
 </details>
 
-Deploy operators on regional, edge01 and edge02 clusters
+Deploy operators on regional and edge clusters
 
 ```bash
-kubectl apply -f package-variant/operators.yaml
+kubectl apply -f package-variant/operators-cp.yaml
+kubectl apply -f package-variant/operators-up.yaml
 ```
 <details>
 <summary>The output is similar to:</summary>
@@ -171,34 +173,28 @@ amf-regional-5667d55644-nkthg    1/1     Running   0             85s
 ausf-regional-77867547bb-vl92j   1/1     Running   0             85s
 mysql-5c6cb749bc-hn26d           1/1     Running   0             15m
 nrf-regional-7c79d988f5-lszwk    1/1     Running   0             85s
-smf-regional-5966dfd454-fc484    1/1     Running   2 (36s ago)   82s
+smf-regional-5966dfd454-fc484    1/1     Running   0             82s
 udm-regional-56f78c9c7c-44556    1/1     Running   0             85s
 udr-regional-6f685c97db-2vrb7    1/1     Running   0             85s
 ```
 </details>
 
-At this step if you see some pods have been restarted or only smf pod has been restarted then it is fine. It happens because till `v1.5.1` some NFs still need the Fully Qualified Domain Name (FQDN) of other NFs. Starting `v2.0.0` release of OAI Core NFs this will be solved.
-
-Deploy UPF on edge sites
-
-**NOTE**: Here we are using package variant instead of package variant set because both of the upfs have different `dnns`. This way we can force two UEs to attach to different UPFs.
+Deploy UPF on edge site
 
 ```bash
-kubectl apply -f package-variant/upf-edge01.yaml
-kubectl apply -f package-variant/upf-edge02.yaml
+kubectl apply -f package-variant/upf-edge.yaml
 ```
 
 <details>
 <summary>The output is similar to:</summary>
 
 ```console
-packagevariant.config.porch.kpt.dev/edge01-oai-upf created
-packagevariant.config.porch.kpt.dev/edge02-oai-upf created
+packagevariant.config.porch.kpt.dev/edge-oai-upf created
 ```
 </details>
 
 
-In five mins you will see two upf instances in `oai-upf` namespace in edge01 and edge02 cluster respectively. 
+In five mins you will see two upf instances in `oai-upf` namespace in edge01 cluster respectively. 
 
 ```bash
 kubectl get pods -n oai-upf --context edge01-admin@edge01
@@ -210,19 +206,6 @@ kubectl get pods -n oai-upf --context edge01-admin@edge01
 ```console
 NAME                          READY   STATUS    RESTARTS   AGE
 upf-edge01-696976df64-gwn42   1/1     Running   0          42m
-```
-</details>
-
-```bash
-kubectl get pods -n oai-upf --context edge02-admin@edge02
-```
-
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-NAME                          READY   STATUS    RESTARTS   AGE
-upf-edge02-5f78748889-l75w5   1/1     Running   0          42m
 ```
 </details>
 
@@ -242,9 +225,7 @@ kubectl logs -n oai-upf <edge01-upf-pod-name>  --context edge01-admin@edge01 | g
 ```
 </details>
 
-Similarly check the logs of UPF in cluster `edge02-admin@edge02`.
-
-In case you don't see a session the mostly probably it is a networking issue in the setup and UPF is not able to reach the SMF n4 ip-address. To check this we suggest that you go inside the SMF pod and install `tcpdump` and ping `n4` ip-address of UPF(s) (edge01 and edge02). 
+In case you don't see a session the mostly probably it is a networking issue in the setup and UPF is not able to reach the SMF n4 ip-address. To check this we suggest that you go inside the SMF pod and install `tcpdump` and ping `n4` ip-address of UPF. 
 
 ## Step 4: Deploying OAI-GNB and OAI-NR-UE
 
@@ -300,12 +281,12 @@ kubectl logs <amf-regional-pod-name> -n oaicp --context regional-admin@regional
 
 You should see that the gNB is connected. 
 
-After this install `oai-nr-ue-1` kpt package in context regional. 
+After this install `oai-nr-ue` kpt package in context regional. 
 
 ```bash
-kpt fn render oai-nr-ue-1
-kpt live init oai-nr-ue-1 --context regional-admin@regional
-kpt live apply oai-nr-ue-1 --context regional-admin@regional
+kpt fn render oai-nr-ue
+kpt live init oai-nr-ue --context regional-admin@regional
+kpt live apply oai-nr-ue --context regional-admin@regional
 ```
 Check that the UE pod is up and running
 
@@ -318,7 +299,7 @@ kubectl get pods -n oai5g-ran --context regional-admin@regional
 
 ```console
 NAME                           READY   STATUS    RESTARTS   AGE
-oai-nr-ue-1-75d46ff4fd-qxsh8   1/1     Running   0          48s
+oai-nr-ue-75d46ff4fd-qxsh8   1/1     Running   0          48s
 oaignb-67b99b95dd-vrkzb        1/1     Running   0          3m30s
 ```
 </details>
@@ -326,7 +307,7 @@ oaignb-67b99b95dd-vrkzb        1/1     Running   0          3m30s
 You will see that the ue is connected once `oaitun_ue1` tunnel interface is up. 
 
 ```bash
-kubectl exec -it <oai-nr-ue-1-pod-name> -n oai5g-ran --context regional-admin@regional ifconfig oaitun_ue1
+kubectl exec -it <oai-nr-ue-pod-name> -n oai5g-ran --context regional-admin@regional ifconfig oaitun_ue1
 ```
 
 <details>
@@ -343,52 +324,3 @@ oaitun_ue1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 </details>
-
-Instantiate the second nr-ue --> 
-
-After this install `oai-nr-ue-2` kpt package in context regional. 
-
-```bash
-kpt fn render oai-nr-ue-2
-kpt live init oai-nr-ue-2 --context regional-admin@regional
-kpt live apply oai-nr-ue-2 --context regional-admin@regional
-```
-Check that the UE pod is up and running
-
-```bash
-kubectl get pods -n oai5g-ran --context regional-admin@regional
-```
-
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-NAME                           READY   STATUS    RESTARTS   AGE
-oai-nr-ue-1-75d46ff4fd-qxsh8   1/1     Running   0          3m39s
-oai-nr-ue-2-57cf489776-s4n4p   1/1     Running   0          78s
-oaignb-67b99b95dd-vrkzb        1/1     Running   0          6m21s
-```
-</details>
-
-You will see that the ue is connected once `oaitun_ue1` tunnel interface is up. 
-
-```bash
-kubectl exec -it <oai-nr-ue-2-pod-name> -n oai5g-ran --context regional-admin@regional ifconfig oaitun_ue1
-```
-
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-oaitun_ue1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
-        inet 10.1.0.2  netmask 255.255.255.0  destination 10.1.0.2
-        inet6 fe80::7e3:e22c:c066:d079  prefixlen 64  scopeid 0x20<link>
-        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 500  (UNSPEC)
-        RX packets 0  bytes 0 (0.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 5  bytes 240 (240.0 B)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
-</details>
-
-**NOTE**: At the moment the UE can not ping anywhere because the DNN pool is not allocating the right subnet to UPFs. We are trying to solve it.
