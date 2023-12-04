@@ -34,9 +34,9 @@ replacements:
       kind: NFConfig
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
-    - metadata.name
+    - metadata.namespace
   - select:
       kind: NFDeployment
     fieldPaths:
-    - metadata.name
+    - metadata.namespace
     - metadata.annotations.[specializer.nephio.org/namespace]
