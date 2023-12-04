@@ -67,9 +67,10 @@ All the files are published under OAI license except the [crds](./oai-operators/
 1. Make sure that you have a running regional, multiple edge cluster topology as defined in [nephio exercise](https://github.com/nephio-project/docs/blob/v1.0.1/user-guide/exercises.md). 
 
 ```bash
-git clone https://gitlab.eurecom.fr/nephio/oai-packages.git && cd oai-packages
+git clone https://github.com/OPENAIRINTERFACE/oai-packages.git
 #TEMPORARY
 git checkout r2
+cd oai-packages
 ```
 
 ## Step 1: Adding oai-packages repository in nephio repo list
