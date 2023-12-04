@@ -1,7 +1,7 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: edge-oai-upf
+  name: oai-upf-edge
 spec:
   upstream:
     repo: oai-packages

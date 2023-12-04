@@ -81,6 +81,42 @@ kpt live init oai-repository
 kpt live apply oai-repository
 ```
 
+<details>
+<summary>The output is similar to:</summary>
+
+```console
+installing inventory ResourceGroup CRD.
+inventory update started
+inventory update finished
+apply phase started
+repository.config.porch.kpt.dev/oai-packages apply successful
+apply phase finished
+reconcile phase started
+repository.config.porch.kpt.dev/oai-packages reconcile pending
+repository.config.porch.kpt.dev/oai-packages reconcile successful
+reconcile phase finished
+inventory update started
+inventory update finished
+apply result: 1 attempted, 1 successful, 0 skipped, 0 failed
+reconcile result: 1 attempted, 1 successful, 0 skipped, 0 failed, 0 timed out
+```
+</details>
+
+To verify the repository is on-boarded
+
+```bash
+kubectl get repositories | grep oai-packages
+```
+
+<details>
+<summary>The output is similar to:</summary>
+
+```console
+NAME                      TYPE   CONTENT   DEPLOYMENT   READY   ADDRESS
+oai-packages              git    Package   false        True    https://github.com/OPENAIRINTERFACE/oai-packages
+```
+</details>
+
 ## Step 2: Deploy core network functions package variant
 
 Now start deploying the core network function package variant starting with database. 
@@ -99,10 +135,10 @@ packagevariantset.config.porch.kpt.dev/regional-oai-database created
 ```
 </details>
 
-After couple of seconds you will see database pod in regional cluster in `oaicp` namespace
+After couple of seconds you will see database pod in regional cluster in `oai-core` namespace
 
 ```bash
-kubectl get pods -n oaicp --context regional-admin@regional
+kubectl get pods -n oai-core --context regional-admin@regional
 ```
 <details>
 <summary>The output is similar to:</summary>
@@ -123,19 +159,24 @@ kubectl apply -f package-variant/operators-up.yaml
 <summary>The output is similar to:</summary>
 
 ```console
-packagevariantset.config.porch.kpt.dev/oai-operators created
+packagevariant.config.porch.kpt.dev/oai-cp-operators created
+packagevariant.config.porch.kpt.dev/oai-up-operators created
 ```
 </details>
 
-After couple of clusters oai-operator package will be in `main` branch of gitea repository of regional, edge01 and edge02 cluster. To check if the pods are running
+After couple of clusters oai-operator package will be in `main` branch of gitea repository of regional and edge01. To check if the pods are running
+
+Core network control plane operators will be in regional cluster and user plane in edge cluster.
 
 ```bash
-kubectl get pods -n oai-operators --context edge02-admin@edge02
+kubectl get pods -n oai-operators --context regional-admin@regional
+kubectl get pods -n oai-operators --context edge01-admin@edge01
 ```
 <details>
 <summary>The output is similar to:</summary>
 
 ```console
+## control plane
 NAME                                   READY   STATUS    RESTARTS   AGE
 oai-amf-controller-55dfbf8c4-9qdl4     1/1     Running   0          2m24s
 oai-ausf-controller-769d64999f-28ntm   1/1     Running   0          2m24s
@@ -143,7 +184,9 @@ oai-nrf-controller-67f556bf75-8svd5    1/1     Running   0          2m24s
 oai-smf-controller-5b6db9f5cb-klfsw    1/1     Running   0          2m24s
 oai-udm-controller-867847d4cb-qdrzl    1/1     Running   0          2m24s
 oai-udr-controller-764f4bfdb9-zw622    1/1     Running   0          2m24s
-oai-upf-controller-56844bcb7-s2lfp     1/1     Running   0          2m24s
+## user plane
+NAME                                  READY   STATUS    RESTARTS   AGE
+oai-upf-controller-75cbc869cb-zchjl   1/1     Running   0          11s
 ```
 </details>
 
@@ -159,10 +202,10 @@ kubectl apply -f package-variant/amf.yaml
 kubectl apply -f package-variant/smf.yaml
 ```
 
-In around 6-7 mins you will see all the control plane NFs in `oaicp` namespace in regional cluster.
+In around 6-7 mins you will see all the control plane NFs in `oai-core` namespace in regional cluster.
 
 ```bash
-kubectl get pods -n oaicp --context regional-admin@regional
+kubectl get pods -n oai-core --context regional-admin@regional
 ```
 <details>
 <summary>The output is similar to:</summary>

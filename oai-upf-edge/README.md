@@ -14,7 +14,7 @@ Details: https://kpt.dev/reference/cli/pkg/tree/
 
 ### Apply the package
 ```
-kpt live init oai-upf
-kpt live apply oai-upf --reconcile-timeout=2m --output=table
+kpt live init oai-upf-edge
+kpt live apply oai-upf-edge --reconcile-timeout=2m --output=table
 ```
 Details: https://kpt.dev/reference/cli/live/
