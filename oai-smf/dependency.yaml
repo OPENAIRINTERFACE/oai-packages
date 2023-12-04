@@ -7,7 +7,7 @@ metadata:
     specializer.nephio.org/owner: workload.nephio.org/v1alpha1.NFDeployment.smf-example
     specializer.nephio.org/namespace: example
 spec:
-  packageName: oai-upf-edge
+  packageName: oai-upf
   injectors:
   - apiVersion: workload.nephio.org/v1alpha1
     kind: NFDeployment
