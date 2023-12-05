@@ -7,5 +7,5 @@ metadata:
   labels:
     app.kubernetes.io/name: network-config
 data:
-  namespace: oai
-  sitename: edge01
+  namespace: oai-core
+  sitename: edge

@@ -118,6 +118,32 @@ oai-packages              git    Package   false        True    https://github.c
 ```
 </details>
 
+## Step 2: Setup Skupper
+
+Skupper is setup for setting up communication between two namespaces on two clusters. As at the moment there is no global DNS to resolve the FQDN of NRF deployed in core cluster for UPF deployed in edge cluster. 
+
+Deploy the skupper core and edge package for core and edge cluster respectively 
+
+```bash
+kubectl apply -f package-variant/skupper-core.yaml
+kubectl apply -f package-variant/skupper-edge.yaml
+```
+<details>
+<summary>The output is similar to:</summary>
+
+```console
+packagevariant.config.porch.kpt.dev/skupper-core created
+packagevariant.config.porch.kpt.dev/skupper-edge created
+```
+</details>
+
+Once the skupper is up at the edge cluster, skupper edge needs the secret generated at the core cluster to make a link. For this we will take help of bootstrap secret controller.
+
+```bash
+kubectl get secret link-to-core -n oai-core -o yaml --context regional-admin@regional &> secret.yaml
+kubectl create -f secret.yaml
+```
+
 ## Step 2: Deploy core network functions package variant
 
 Now start deploying the core network function package variant starting with database. 
@@ -150,7 +176,7 @@ mysql-5c6cb749bc-nsdsp   1/1     Running   0          47s
 ```
 </details>
 
-Deploy operators on regional and edge clusters
+### Step 2.1 Deploy operators on the regional and edge cluster
 
 ```bash
 kubectl apply -f package-variant/operators-cp.yaml
@@ -192,6 +218,8 @@ oai-upf-controller-75cbc869cb-zchjl   1/1     Running   0          11s
 </details>
 
 
+### Step 2.3 Deploy Control Plane and User Plane Functions
+
 Deploy control plane network functions AMF, SMF, NRF, UDR, UDM, AUSF
 
 ```bash
@@ -201,6 +229,7 @@ kubectl apply -f package-variant/udr.yaml
 kubectl apply -f package-variant/ausf.yaml
 kubectl apply -f package-variant/amf.yaml
 kubectl apply -f package-variant/smf.yaml
+kubectl apply -f package-variant/upf-edge.yaml
 ```
 
 In around 6-7 mins you will see all the control plane NFs in `oai-core` namespace in regional cluster.
@@ -223,25 +252,10 @@ udr-regional-6f685c97db-2vrb7    1/1     Running   0             85s
 ```
 </details>
 
-Deploy UPF on edge site
+In five mins you will see upf instances in `oai-core` namespace in edge01 cluster respectively. 
 
 ```bash
-kubectl apply -f package-variant/upf-edge.yaml
-```
-
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-packagevariant.config.porch.kpt.dev/edge-oai-upf created
-```
-</details>
-
-
-In five mins you will see two upf instances in `oai-upf` namespace in edge01 cluster respectively. 
-
-```bash
-kubectl get pods -n oai-upf --context edge01-admin@edge01
+kubectl get pods -n oai-core --context edge01-admin@edge01
 ```
 
 <details>
@@ -258,7 +272,7 @@ upf-edge01-696976df64-gwn42   1/1     Running   0          42m
 It is really important that the PFCP session is established between SMF and UPF. If there is no PFCP session then there is no point in moving forward. To check the session you have to read the logs of SMF or UPF. 
 
 ```bash
-kubectl logs -n oai-upf <edge01-upf-pod-name>  --context edge01-admin@edge01 | grep 'Received SX HEARTBEAT REQUEST' | wc -l
+kubectl logs -n oai-core <edge01-upf-pod-name> --context edge01-admin@edge01 | grep 'Received SX HEARTBEAT REQUEST' | wc -l
 ```
 
 <details>
@@ -278,8 +292,8 @@ For the moment we are instantiating `oai-gnb` using its kpt package in `oai5g-ra
 1. Fetch the ip-address and gateway of AMF from `AMFDeployment` using `jq` or `grep`. If you don't have jq utility then I recommend you to install it. 
 
 ```bash
-kubectl get amfdeployments.workload.nephio.org -n oaicp --context regional-admin@regional -o json | jq -r .items[0].spec.interfaces[0].ipv4.address
-kubectl get amfdeployments.workload.nephio.org -n oaicp --context regional-admin@regional -o json | jq -r .items[0].spec.interfaces[0].ipv4.gateway
+kubectl get amfdeployments.workload.nephio.org -n oai-core --context regional-admin@regional -o json | jq -r .items[0].spec.interfaces[0].ipv4.address
+kubectl get amfdeployments.workload.nephio.org -n oai-core --context regional-admin@regional -o json | jq -r .items[0].spec.interfaces[0].ipv4.gateway
 ```
 
 <details>

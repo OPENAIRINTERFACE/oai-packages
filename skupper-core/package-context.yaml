@@ -7,5 +7,5 @@ metadata:
   labels:
     app.kubernetes.io/name: network-config
 data:
-  namespace: oai
-  sitename: regional
+  namespace: oai-core
+  sitename: core

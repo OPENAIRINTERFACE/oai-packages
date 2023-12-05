@@ -84,8 +84,6 @@ spec:
         app: mysql
         app.kubernetes.io/instance: mysql
     spec:
-      imagePullSecrets:
-        - name: regcred
       serviceAccountName: default
       initContainers:
         - name: "remove-lost-found"
