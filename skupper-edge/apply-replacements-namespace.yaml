@@ -38,7 +38,3 @@ replacements:
       kind: ServiceAccount
     fieldPaths:
     - metadata.namespace
-  - select:
-      kind: RoleBinding
-    fieldPaths:
-    - subjects.0.namespace
