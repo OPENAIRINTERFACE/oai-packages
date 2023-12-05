@@ -1,11 +1,11 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: regional-skupper
+  name: skupper-core
 spec:
   upstream:
     repo: oai-packages
-    package: skupper-regional
+    package: skupper-core
     revision: r2
   downstream:
     repo: regional

@@ -1,16 +1,16 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: edge02-skupper
+  name: skupper-edge
 spec:
   upstream:
     repo: oai-packages
-    package: skupper-edge02
+    package: skupper-edge01
     revision: r2
   downstream:
-    repo: edge02
+    repo: edge01
     package: skupper
   annotations:
     approval.nephio.org/policy: initial
   injectors:
-  - name: edge02
+  - name: edge01
