@@ -2,7 +2,7 @@
 apiVersion: workload.nephio.org/v1alpha1
 kind: NFConfig
 metadata:
-  name: oai-amf-config
+  name: oai-smf-config
   namespace: example
 spec:
   configRefs:
