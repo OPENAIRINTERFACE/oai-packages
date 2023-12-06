@@ -118,31 +118,6 @@ oai-packages              git    Package   false        True    https://github.c
 ```
 </details>
 
-## Step 2: Setup Skupper
-
-Skupper is setup for setting up communication between two namespaces on two clusters. As at the moment there is no global DNS to resolve the FQDN of NRF deployed in core cluster for UPF deployed in edge cluster. 
-
-Deploy the skupper core and edge package for core and edge cluster respectively 
-
-```bash
-kubectl apply -f package-variant/skupper-core.yaml
-kubectl apply -f package-variant/skupper-edge.yaml
-```
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-packagevariant.config.porch.kpt.dev/skupper-core created
-packagevariant.config.porch.kpt.dev/skupper-edge created
-```
-</details>
-
-Once the skupper is up at the edge cluster, skupper edge needs the secret generated at the core cluster to make a link. For this we will take help of bootstrap secret controller.
-
-```bash
-kubectl get secret link-to-core -n oai-core -o yaml --context regional-admin@regional &> secret.yaml
-kubectl create -f secret.yaml
-```
 
 ## Step 2: Deploy core network functions package variant
 
