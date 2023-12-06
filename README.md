@@ -227,7 +227,7 @@ udr-regional-6f685c97db-2vrb7    1/1     Running   0             85s
 ```
 </details>
 
-In five mins you will see upf instances in `oai-core` namespace in edge01 cluster respectively. 
+In few mins you will see upf instances in `oai-core` namespace in edge01 cluster respectively. 
 
 ```bash
 kubectl get pods -n oai-core --context edge01-admin@edge01

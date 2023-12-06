@@ -144,7 +144,7 @@ data:
     image: 'docker.io/oaisoftwarealliance/oai-upf:develop'
     fqdn:
       nrf: '172.18.31.200'
-      smf: 'localhost'
+      smf: '127.0.0.1'
 ---
 apiVersion: v1
 kind: ConfigMap
