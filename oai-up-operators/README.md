@@ -1,17 +1,8 @@
 # oai-up-operators
 
-The package contains operator for OAI
+The package contains operator for OAI core network user plane network function
 
-- AMF
-- SMF
-- NRF
 - UPF
-- SMF
-- UDR
-- UDM
-- AUSF
-
-Nephio only proposed the CRD for AMF, SMF and UPF. We are using the same CRDs for network functions on service bus (UDR, UDM, AUSF and NRF). 
 
 ## Usage
 
