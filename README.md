@@ -357,3 +357,9 @@ oaitun_ue1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 </details>
+
+# Contribution requests
+
+In a general way, anybody who is willing can contribute on any part of the code in any network component.
+
+Contributions can be simple bugfixes, advices and remarks on the design, architecture, coding/implementation.
