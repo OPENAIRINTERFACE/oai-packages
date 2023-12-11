@@ -1,4 +1,4 @@
-# Contributing to OAI-Operators #
+# Contributing to OAI-Packages #
 
 We want to make contributing to this project as easy and transparent as possible.
 
