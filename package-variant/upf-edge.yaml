@@ -1,16 +1,16 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: oai-upf-edge
+  name: edge-oai-upf
 spec:
   upstream:
     repo: oai-packages
     package: oai-upf-edge
     revision: r2
   downstream:
-    repo: edge01
+    repo: edge
     package: oai-upf
   annotations:
     approval.nephio.org/policy: initial
   injectors:
-  - name: edge01
+  - name: edge

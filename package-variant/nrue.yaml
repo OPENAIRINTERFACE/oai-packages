@@ -1,16 +1,16 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: regional-oainrue
+  name: edge-oainrue
 spec:
   upstream:
     repo: oai-packages
     package: oai-nr-ue
     revision: r2
   downstream:
-    repo: regional
+    repo: edge
     package: oai-nr-ue
   annotations:
     approval.nephio.org/policy: initial
   injectors:
-  - name: regional
+  - name: edge
