@@ -185,7 +185,7 @@ spec:
         runAsUser: 0
       containers:
       - name: nrf-controller
-        image: "docker.io/arorasagar/oai-nrf-controller:develop"
+        image: "docker.io/arorasagar/oai-nrf-controller:v2.0.0"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'

@@ -193,7 +193,7 @@ spec:
         runAsUser: 0
       containers:
       - name: udm-controller
-        image: "docker.io/arorasagar/oai-udm-controller:develop"
+        image: "docker.io/arorasagar/oai-udm-controller:v2.0.0"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'

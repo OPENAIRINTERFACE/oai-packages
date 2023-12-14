@@ -279,7 +279,7 @@ spec:
         runAsUser: 0
       containers:
       - name: smf-controller
-        image: "docker.io/arorasagar/oai-smf-controller:develop"
+        image: "docker.io/arorasagar/oai-smf-controller:v2.0.0"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'
