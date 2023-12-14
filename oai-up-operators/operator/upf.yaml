@@ -141,7 +141,7 @@ data:
         cpu: '100m'
         memory: '512Mi'
     logLevel: debug
-    image: 'docker.io/oaisoftwarealliance/oai-upf:develop'
+    image: 'docker.io/oaisoftwarealliance/oai-upf:v2.0.0'
     fqdn:
       nrf: '172.18.31.200'
       smf: '127.0.0.1'

@@ -128,7 +128,7 @@ data:
         cpu: '100m'
         memory: '512Mi'
     logLevel: info
-    image: 'docker.io/oaisoftwarealliance/oai-udr:develop'
+    image: 'docker.io/oaisoftwarealliance/oai-udr:v2.0.0'
     fqdn:
       nrf: oai-nrf
     database:
