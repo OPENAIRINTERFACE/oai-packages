@@ -17,7 +17,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: oai-operators
+  namespace: oai-cn-operators
   name: oai-nrf-operator
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -71,13 +71,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: oai-nrf-operator
-    namespace: oai-operators
+    namespace: oai-cn-operators
 ## In case you want to restrict to a namespace uncomment this role and remove the rights from cluster role
 #---
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: Role
 # metadata:
-#   namespace: oai-operators
+#   namespace: oai-cn-operators
 #   name: oai-nrf-operator-role
 # rules:
 #   # Framework: posting the events about the handlers progress/errors.
@@ -97,7 +97,7 @@ subjects:
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: RoleBinding
 # metadata:
-#   namespace: oai-operators
+#   namespace: oai-cn-operators
 #   name: oai-nrf-operator-rolebinding-namespaced
 # roleRef:
 #   apiGroup: rbac.authorization.k8s.io
@@ -111,7 +111,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-nrf-op-conf
-  namespace: oai-operators
+  namespace: oai-cn-operators
 data:
   nrf.yaml: |
     nfInterfaces:
@@ -128,7 +128,7 @@ data:
         cpu: '100m'
         memory: '256Mi'
     logLevel: info
-    image: 'docker.io/oaisoftwarealliance/oai-nrf:v2.0.0'
+    image: 'docker.io/oaisoftwarealliance/oai-nrf:v2.0.1'
     nfInterfaces:
       sbi: 'eth0'
     ports:
@@ -140,7 +140,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-nrf-nf-conf
-  namespace: oai-operators
+  namespace: oai-cn-operators
 data:
   nrf.yaml: |
     ############# Common configuration
@@ -165,7 +165,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oai-nrf-controller
-  namespace: oai-operators
+  namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-nrf
 spec:
@@ -185,7 +185,7 @@ spec:
         runAsUser: 0
       containers:
       - name: nrf-controller
-        image: "docker.io/arorasagar/oai-nrf-controller:v2.0.0"
+        image: "docker.io/arorasagar/oai-nrf-controller:v2.0.1"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'

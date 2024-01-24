@@ -17,7 +17,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: oai-operators
+  namespace: oai-cn-operators
   name: oai-udr-operator
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -71,13 +71,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: oai-udr-operator
-    namespace: oai-operators
+    namespace: oai-cn-operators
 ## In case you want to restrict to a namespace uncomment this role and remove the rights from cluster role
 #---
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: Role
 # metadata:
-#   namespace: oai-operators
+#   namespace: oai-cn-operators
 #   name: oai-udr-operator-role
 # rules:
 #   # Framework: posting the events about the handlers progress/errors.
@@ -97,7 +97,7 @@ subjects:
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: RoleBinding
 # metadata:
-#   namespace: oai-operators
+#   namespace: oai-cn-operators
 #   name: oai-udr-operator-rolebinding-namespaced
 # roleRef:
 #   apiGroup: rbac.authorization.k8s.io
@@ -111,7 +111,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-udr-op-conf
-  namespace: oai-operators
+  namespace: oai-cn-operators
 data:
   udr.yaml: |
     ports:
@@ -128,7 +128,7 @@ data:
         cpu: '100m'
         memory: '512Mi'
     logLevel: info
-    image: 'docker.io/oaisoftwarealliance/oai-udr:v2.0.0'
+    image: 'docker.io/oaisoftwarealliance/oai-udr:v2.0.1'
     fqdn:
       nrf: oai-nrf
     database:
@@ -142,7 +142,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-udr-nf-conf
-  namespace: oai-operators
+  namespace: oai-cn-operators
 data:
   udr.yaml: |
     # Log level
@@ -182,7 +182,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oai-udr-controller
-  namespace: oai-operators
+  namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-udr
 spec:
@@ -202,7 +202,7 @@ spec:
         runAsUser: 0
       containers:
       - name: udr-controller
-        image: "docker.io/arorasagar/oai-udr-controller:v2.0.0"
+        image: "docker.io/arorasagar/oai-udr-controller:v2.0.1"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'

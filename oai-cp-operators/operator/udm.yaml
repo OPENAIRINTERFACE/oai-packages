@@ -17,7 +17,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: oai-operators
+  namespace: oai-cn-operators
   name: oai-udm-operator
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -71,13 +71,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: oai-udm-operator
-    namespace: oai-operators
+    namespace: oai-cn-operators
 ## In case you want to restrict to a namespace uncomment this role and remove the rights from cluster role
 #---
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: Role
 # metadata:
-#   namespace: oai-operators
+#   namespace: oai-cn-operators
 #   name: oai-udm-operator-role
 # rules:
 #   # Framework: posting the events about the handlers progress/errors.
@@ -97,7 +97,7 @@ subjects:
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: RoleBinding
 # metadata:
-#   namespace: oai-operators
+#   namespace: oai-cn-operators
 #   name: oai-udm-operator-rolebinding-namespaced
 # roleRef:
 #   apiGroup: rbac.authorization.k8s.io
@@ -111,7 +111,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-udm-op-conf
-  namespace: oai-operators
+  namespace: oai-cn-operators
 data:
   udm.yaml: |
     ports: 
@@ -128,7 +128,7 @@ data:
         cpu: '100m'
         memory: '256Mi'
     logLevel: info
-    image: 'docker.io/oaisoftwarealliance/oai-udm:v2.0.0'
+    image: 'docker.io/oaisoftwarealliance/oai-udm:v2.0.1'
     fqdn:
       nrf: 'oai-nrf'
       udr: 'oai-udr'
@@ -137,7 +137,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-udm-nf-conf
-  namespace: oai-operators
+  namespace: oai-cn-operators
 data:
   udm.yaml: |
     # Log level
@@ -173,7 +173,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oai-udm-controller
-  namespace: oai-operators
+  namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-udm
 spec:
@@ -193,7 +193,7 @@ spec:
         runAsUser: 0
       containers:
       - name: udm-controller
-        image: "docker.io/arorasagar/oai-udm-controller:v2.0.0"
+        image: "docker.io/arorasagar/oai-udm-controller:v2.0.1"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'

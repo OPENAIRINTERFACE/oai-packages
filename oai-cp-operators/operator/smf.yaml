@@ -17,7 +17,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: oai-operators
+  namespace: oai-cn-operators
   name: oai-smf-operator
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -71,13 +71,13 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: oai-smf-operator
-    namespace: oai-operators
+    namespace: oai-cn-operators
 ## In case you want to restrict to a namespace uncomment this role and remove the rights from cluster role
 #---
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: Role
 # metadata:
-#   namespace: oai-operators
+#   namespace: oai-cn-operators
 #   name: oai-smf-operator-role
 # rules:
 #   # Framework: posting the events about the handlers progress/errors.
@@ -97,7 +97,7 @@ subjects:
 # apiVersion: rbac.authorization.k8s.io/v1
 # kind: RoleBinding
 # metadata:
-#   namespace: oai-operators
+#   namespace: oai-cn-operators
 #   name: oai-smf-operator-rolebinding-namespaced
 # roleRef:
 #   apiGroup: rbac.authorization.k8s.io
@@ -111,7 +111,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-smf-op-conf
-  namespace: oai-operators
+  namespace: oai-cn-operators
 data:
   smf.yaml: |
     nad: 
@@ -128,7 +128,7 @@ data:
         port: 80
         protocol: TCP
     logLevel: info
-    image: 'docker.io/oaisoftwarealliance/oai-smf:v2.0.0'
+    image: 'docker.io/oaisoftwarealliance/oai-smf:v2.0.1'
     ueSettings:
       mtu: 1500
       secondary: 1.1.1.1
@@ -148,7 +148,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oai-smf-nf-conf
-  namespace: oai-operators
+  namespace: oai-cn-operators
 data:
   smf.yaml: |
     # Log level for all the NFs
@@ -259,7 +259,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: oai-smf-controller
-  namespace: oai-operators
+  namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-smf
 spec:
@@ -279,7 +279,7 @@ spec:
         runAsUser: 0
       containers:
       - name: smf-controller
-        image: "docker.io/arorasagar/oai-smf-controller:v2.0.0"
+        image: "docker.io/arorasagar/oai-smf-controller:v2.0.1"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'

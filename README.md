@@ -12,7 +12,15 @@
   </tr>
 </table>
 
-This repository contains Kpt packages and package variant sets for OAI operators and network functions. Designed for [Nephio](https://nephio.org/)
+[[_TOC_]]
+
+# 1. Introduction
+
+This repository contains Kpt packages and package variants for OAI operators and network functions. Designed for [Nephio](https://nephio.org/) release 2. 
+
+**NOTICE**
+
+All the files are published under BSD 3-Clause License and the yaml definations provided by nephio.
 
 Git repository for OAI Operators --> `https://gitlab.eurecom.fr/development/oai-operators` 
 
@@ -42,40 +50,26 @@ Repository structure is below
 ├── oai-udr
 ├── oai-upf-edge
 ├── package-variant
-├── skupper-edge
-└── skupper-regional
 └── package-variant	Package variant for all nfs, database and operator
 ```
 
-The package-variants are designed to deploy below architecture
+The package-variants are designed to deploy Nephio R2 deployment. 
 
-![Deployment](./docs/images/oai-package-variant.jpg) **TO BE UPDATED FOR R2**
-
-**Disclaimer**
-
-1. For the moment we are instantiating `oai-gnb` using its kpt package in `oai5g-ran` namespace and context `regional`. Rather than using a package variant. To do this we have to create a KRM function which we will do soon (in case someone is interested then please let us know). At the moment networking is manually set, gNB is using only 1 interface for n2 and n3 and it is in the same subnet of AMF.
-2. At the moment the UE can not ping anywhere because the `network-vpc-internet` is not allocating the right subnet to UPFs. We are trying to solve it.
-
-**NOTICE**
-
-All the files are published under OAI license except the [crds](./oai-operators/crds) and the yaml definations provided by nephio.
-
-# How deploy the toplogy on Nephio
+# 2. How to deploy the toplogy on Nephio
 
 ## Step 0: Prerequisite
 
-1. Make sure that you have a running regional, multiple edge cluster topology as defined in [nephio exercise](https://github.com/nephio-project/docs/blob/v1.0.1/user-guide/exercises.md). 
+1. Make sure that you have a running core, core and edge cluster topology as defined in [nephio exercise](https://github.com/nephio-project/docs/blob/v1.0.1/user-guide/exercises.md). 
 
 ```bash
 git clone https://github.com/OPENAIRINTERFACE/oai-packages.git
-#TEMPORARY
-git checkout r2
+# IF NEEDED
+git checkout <branch>
 cd oai-packages
 ```
 
-## Step 1: Adding oai-packages repository in nephio repo list
+## Step 1 (Optional): Adding oai-packages repository in nephio repo list
 
-Right now we are providing the kpt package in this repository 
 
 ```bash
 kpt live init oai-repository
@@ -133,14 +127,14 @@ kubectl apply -f package-variant/database.yaml
 <summary>The output is similar to:</summary>
 
 ```console
-packagevariantset.config.porch.kpt.dev/regional-oai-database created
+packagevariantset.config.porch.kpt.dev/core-oai-database created
 ```
 </details>
 
-After couple of seconds you will see database pod in regional cluster in `oai-core` namespace
+After couple of seconds you will see database pod in core cluster in `oai-core` namespace
 
 ```bash
-kubectl get pods -n oai-core --context regional-admin@regional
+kubectl get pods -n oai-core --context core-admin@core
 ```
 <details>
 <summary>The output is similar to:</summary>
@@ -151,7 +145,7 @@ mysql-5c6cb749bc-nsdsp   1/1     Running   0          47s
 ```
 </details>
 
-### Step 2.1 Deploy operators on the regional and edge cluster
+### Step 2.1 Deploy operators on the core and edge cluster
 
 ```bash
 kubectl apply -f package-variant/operators-cp.yaml
@@ -166,13 +160,11 @@ packagevariant.config.porch.kpt.dev/oai-up-operators created
 ```
 </details>
 
-After couple of clusters oai-operator package will be in `main` branch of gitea repository of regional and edge01. To check if the pods are running
-
-Core network control plane operators will be in regional cluster and user plane in edge cluster.
+After couple of mins oai-operator package will be in `main` branch of gitea Core and Edge repository. Core network control plane operators will be in Core cluster and user plane in Edge cluster.
 
 ```bash
-kubectl get pods -n oai-operators --context regional-admin@regional
-kubectl get pods -n oai-operators --context edge01-admin@edge01
+kubectl get pods -n oai-cn-operators --context core-admin@core
+kubectl get pods -n oai-cn-operators --context edge-admin@edge
 ```
 <details>
 <summary>The output is similar to:</summary>
@@ -207,30 +199,30 @@ kubectl apply -f package-variant/smf.yaml
 kubectl apply -f package-variant/upf-edge.yaml
 ```
 
-In around 6-7 mins you will see all the control plane NFs in `oai-core` namespace in regional cluster.
+In around 6-7 mins you will see all the control plane NFs in `oai-core` namespace in core cluster.
 
 ```bash
-kubectl get pods -n oai-core --context regional-admin@regional
+kubectl get pods -n oai-core --context core-admin@core
 ```
 <details>
 <summary>The output is similar to:</summary>
 
 ```console
 NAME                             READY   STATUS    RESTARTS      AGE
-amf-regional-5667d55644-nkthg    1/1     Running   0             85s
-ausf-regional-77867547bb-vl92j   1/1     Running   0             85s
-mysql-5c6cb749bc-hn26d           1/1     Running   0             15m
-nrf-regional-7c79d988f5-lszwk    1/1     Running   0             85s
-smf-regional-5966dfd454-fc484    1/1     Running   0             82s
-udm-regional-56f78c9c7c-44556    1/1     Running   0             85s
-udr-regional-6f685c97db-2vrb7    1/1     Running   0             85s
+amf-core-5667d55644-nkthg    1/1     Running   0             85s
+ausf-core-77867547bb-vl92j   1/1     Running   0             85s
+mysql-5c6cb749bc-hn26d       1/1     Running   0             15m
+nrf-core-7c79d988f5-lszwk    1/1     Running   0             85s
+smf-core-5966dfd454-fc484    1/1     Running   0             82s
+udm-core-56f78c9c7c-44556    1/1     Running   0             85s
+udr-core-6f685c97db-2vrb7    1/1     Running   0             85s
 ```
 </details>
 
-In few mins you will see upf instances in `oai-core` namespace in edge01 cluster respectively. 
+In few mins you will see upf instances in `oai-core` namespace in edge cluster respectively. 
 
 ```bash
-kubectl get pods -n oai-core --context edge01-admin@edge01
+kubectl get pods -n oai-core --context edge-admin@edge
 ```
 
 <details>
@@ -238,7 +230,7 @@ kubectl get pods -n oai-core --context edge01-admin@edge01
 
 ```console
 NAME                          READY   STATUS    RESTARTS   AGE
-upf-edge01-696976df64-gwn42   1/1     Running   0          42m
+upf-edge-696976df64-gwn42   1/1     Running   0          42m
 ```
 </details>
 
@@ -247,7 +239,7 @@ upf-edge01-696976df64-gwn42   1/1     Running   0          42m
 It is really important that the PFCP session is established between SMF and UPF. If there is no PFCP session then there is no point in moving forward. To check the session you have to read the logs of SMF or UPF. 
 
 ```bash
-kubectl logs -n oai-core <edge01-upf-pod-name> --context edge01-admin@edge01 | grep 'Received SX HEARTBEAT REQUEST' | wc -l
+kubectl logs -n oai-core <edge-upf-pod-name> --context edge-admin@edge | grep 'Received SX HEARTBEAT REQUEST' | wc -l
 ```
 
 <details>
@@ -260,103 +252,7 @@ kubectl logs -n oai-core <edge01-upf-pod-name> --context edge01-admin@edge01 | g
 
 In case you don't see a session the mostly probably it is a networking issue in the setup and UPF is not able to reach the SMF n4 ip-address. To check this we suggest that you go inside the SMF pod and install `tcpdump` and ping `n4` ip-address of UPF. 
 
-## Step 4: Deploying OAI-GNB and OAI-NR-UE
-
-For the moment we are instantiating `oai-gnb` using its kpt package in `oai5g-ran` namespace and context `regional`. Rather than using a package variant. To do this we have to create a KRM function which we will do soon (in case someone is interested then please let us know). At the moment networking is manually set, gNB is using only 1 interface for n2 and n3 and it is in the same subnet of AMF.
-
-1. Fetch the ip-address and gateway of AMF from `AMFDeployment` using `jq` or `grep`. If you don't have jq utility then I recommend you to install it. 
-
-```bash
-kubectl get amfdeployments.workload.nephio.org -n oai-core --context regional-admin@regional -o json | jq -r .items[0].spec.interfaces[0].ipv4.address
-kubectl get amfdeployments.workload.nephio.org -n oai-core --context regional-admin@regional -o json | jq -r .items[0].spec.interfaces[0].ipv4.gateway
-```
-
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-172.2.1.254/24
-172.2.1.1
-```
-</details>
-
-2. Once you have the ip-address of amf then choose any other ip-address in this range and replace `gnbNgaIpAddress` and `gnbNguIpAddress` with the choosen ip-address and replace `amfIpAddress` with the amf ip-address in [oai-gnb/oai-gnb.yaml](./oai-gnb/oai-gnb.yaml).
-When you add amf ip-address please remove the subnet mask `/24`. In the same file you have to replace the ip-addresses for `NetworkAttachmentDefinition`. In the filed `address` you have to put the ip-address of gNB which you selected and in `gw` you have to mention the `gateway` of amf.
-
-
-```bash
-kpt fn render oai-gnb
-kpt live init oai-gnb --context regional-admin@regional
-kpt live apply oai-gnb --context regional-admin@regional
-```
-
-Once the pod is running you can check it using below command
-
-```bash
-kubectl get pods -n oai5g-ran --context regional-admin@regional
-```
-
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-NAME                           READY   STATUS    RESTARTS   AGE
-oaignb-67b99b95dd-vrkzb        1/1     Running   0          3m30s
-```
-</details>
-
-
-Verify that AMF has registered the gNB via checking the logs of AMF. 
-
-```bash
-kubectl logs <amf-regional-pod-name> -n oaicp --context regional-admin@regional
-```
-
-You should see that the gNB is connected. 
-
-After this install `oai-nr-ue` kpt package in context regional. 
-
-```bash
-kpt fn render oai-nr-ue
-kpt live init oai-nr-ue --context regional-admin@regional
-kpt live apply oai-nr-ue --context regional-admin@regional
-```
-Check that the UE pod is up and running
-
-```bash
-kubectl get pods -n oai5g-ran --context regional-admin@regional
-```
-
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-NAME                           READY   STATUS    RESTARTS   AGE
-oai-nr-ue-75d46ff4fd-qxsh8   1/1     Running   0          48s
-oaignb-67b99b95dd-vrkzb        1/1     Running   0          3m30s
-```
-</details>
-
-You will see that the ue is connected once `oaitun_ue1` tunnel interface is up. 
-
-```bash
-kubectl exec -it <oai-nr-ue-pod-name> -n oai5g-ran --context regional-admin@regional ifconfig oaitun_ue1
-```
-
-<details>
-<summary>The output is similar to:</summary>
-
-```console
-oaitun_ue1: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1500
-        inet 10.1.0.2  netmask 255.255.255.0  destination 10.1.0.2
-        inet6 fe80::7e3:e22c:c066:d079  prefixlen 64  scopeid 0x20<link>
-        unspec 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  txqueuelen 500  (UNSPEC)
-        RX packets 0  bytes 0 (0.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 5  bytes 240 (240.0 B)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
-</details>
+To deploy the RAN network functions you can follow the steps from the Nephio documentation. 
 
 # Contribution requests
 
