@@ -21,4 +21,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: oai-operators
+  name: oai-cn-operators
