@@ -235,7 +235,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-upf-controller
+  name: oai-upf-operator
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-upf
@@ -257,7 +257,7 @@ spec:
       imagePullSecrets:
       - name: regcred
       containers:
-      - name: upf-controller
+      - name: upf-operator
         image: "docker.io/arorasagar/oai-upf-controller:develop"
         imagePullPolicy: Always
         env:

@@ -240,7 +240,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-amf-controller
+  name: oai-amf-operator
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-amf
@@ -260,7 +260,7 @@ spec:
         runAsGroup: 0
         runAsUser: 0
       containers:
-      - name: amf-controller
+      - name: amf-operator
         image: "docker.io/arorasagar/oai-amf-controller:v2.0.1"
         imagePullPolicy: Always
         env:

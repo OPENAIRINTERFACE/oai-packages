@@ -164,7 +164,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-nrf-controller
+  name: oai-nrf-operator
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-nrf
@@ -184,7 +184,7 @@ spec:
         runAsGroup: 0
         runAsUser: 0
       containers:
-      - name: nrf-controller
+      - name: nrf-operator
         image: "docker.io/arorasagar/oai-nrf-controller:v2.0.1"
         imagePullPolicy: Always
         env:

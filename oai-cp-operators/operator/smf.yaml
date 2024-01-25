@@ -258,7 +258,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-smf-controller
+  name: oai-smf-operator
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-smf
@@ -278,7 +278,7 @@ spec:
         runAsGroup: 0
         runAsUser: 0
       containers:
-      - name: smf-controller
+      - name: smf-operator
         image: "docker.io/arorasagar/oai-smf-controller:v2.0.1"
         imagePullPolicy: Always
         env:

@@ -181,7 +181,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-udr-controller
+  name: oai-udr-operator
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-udr
@@ -201,7 +201,7 @@ spec:
         runAsGroup: 0
         runAsUser: 0
       containers:
-      - name: udr-controller
+      - name: udr-operator
         image: "docker.io/arorasagar/oai-udr-controller:v2.0.1"
         imagePullPolicy: Always
         env:

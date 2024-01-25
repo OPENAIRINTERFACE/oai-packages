@@ -174,7 +174,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-ausf-controller
+  name: oai-ausf-operator
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-ausf
@@ -194,7 +194,7 @@ spec:
         runAsGroup: 0
         runAsUser: 0
       containers:
-      - name: ausf-controller
+      - name: ausf-operator
         image: "docker.io/arorasagar/oai-ausf-controller:v2.0.1"
         imagePullPolicy: Always
         env:
