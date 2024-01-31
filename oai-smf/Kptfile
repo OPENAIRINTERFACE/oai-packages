@@ -14,9 +14,8 @@ pipeline:
       configPath: apply-replacements-namespace.yaml
     - image: gcr.io/kpt-fn/set-namespace:v0.4.1
       configPath: cm-namespace.yaml
-    - image: docker.io/lostbrain/nfdeployfn:test-5
+    - image: docker.io/lostbrain/nfdeployfn:test-7 
     - image: docker.io/nephio/interface-fn:1734962693221126144
     - image: docker.io/nephio/nad-fn:1734962693418258432
     - image: docker.io/nephio/interface-fn:1734962693221126144
-    - image: docker.io/lostbrain/nfdeployfn:test-5
-    
+    - image: docker.io/lostbrain/nfdeployfn:test-7
