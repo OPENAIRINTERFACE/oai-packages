@@ -6,7 +6,7 @@ spec:
   upstream:
     repo: oai-packages
     package: oai-rfsim-gnb
-    revision: r2
+    revision: v2.0.0
   downstream:
     repo: edge
     package: oai-rfsim-gnb

@@ -252,7 +252,7 @@ kubectl logs -n oai-core <edge-upf-pod-name> --context edge-admin@edge | grep 'R
 
 In case you don't see a session the mostly probably it is a networking issue in the setup and UPF is not able to reach the SMF n4 ip-address. To check this we suggest that you go inside the SMF pod and install `tcpdump` and ping `n4` ip-address of UPF. 
 
-To deploy the RAN network functions you can follow the steps from the Nephio documentation. 
+To deploy the RAN network functions you can follow the steps from the [Nephio documentation](https://github.com/nephio-project/docs/blob/v2.0.0/content/en/docs/guides/user-guides/exercise-2-oai.md). 
 
 # Contribution requests
 
