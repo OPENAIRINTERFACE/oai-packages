@@ -258,7 +258,7 @@ spec:
       - name: regcred
       containers:
       - name: upf-operator
-        image: "docker.io/arorasagar/oai-upf-controller:develop"
+        image: "docker.io/arorasagar/oai-upf-controller:v2.0.1"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'
