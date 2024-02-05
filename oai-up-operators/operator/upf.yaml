@@ -254,8 +254,6 @@ spec:
       securityContext:
         runAsGroup: 0
         runAsUser: 0
-      imagePullSecrets:
-      - name: regcred
       containers:
       - name: upf-operator
         image: "docker.io/arorasagar/oai-upf-controller:v2.0.1"
