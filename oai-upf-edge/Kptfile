@@ -16,9 +16,7 @@ pipeline:
       configPath: package-context.yaml
     - image: docker.io/nephio/nfdeploy-fn:v2.0.0
     - image: docker.io/nephio/interface-fn:v2.0.0
-    - image: docker.io/nephio/dnn-fn:v2.0.0
     - image: docker.io/nephio/nad-fn:v2.0.0
-    - image: docker.io/nephio/dnn-fn:v2.0.0
     - image: docker.io/nephio/interface-fn:v2.0.0
     - image: gcr.io/kpt-fn/apply-replacements:v0.1.1
       configPath: apply-replacements-namespace.yaml
