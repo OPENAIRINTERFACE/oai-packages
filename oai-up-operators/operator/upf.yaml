@@ -127,23 +127,24 @@ data:
       - name: 'sbi'
         port: 80
         protocol: TCP
+    httpVersion: 1
     nfInterfaces:
-      sbi: 'eth0'
+      sbi: 'n6'
       n3: 'n3'
       n4: 'n4'
       n6: 'n6'
       n9: 'eth0'
     compute:
       req:
-        cpu: '100m'
+        cpu: '1'
         memory: '512Mi'
       limits:
-        cpu: '100m'
+        cpu: '1'
         memory: '512Mi'
     logLevel: debug
-    image: 'docker.io/oaisoftwarealliance/oai-upf:v2.0.0'
+    image: 'docker.io/oaisoftwarealliance/oai-upf-ubi:v2.0.1'
     fqdn:
-      nrf: '172.18.31.200'
+      nrf: '172.21.9.50'
       smf: '127.0.0.1'
 ---
 apiVersion: v1
@@ -160,7 +161,7 @@ data:
     # If you enable registration, the other NFs will use the NRF discovery mechanism
     register_nf:
       upf: 'yes'
-    http_version: 2
+    http_version: {{ conf['httpVersion'] }}
     ## general single_nssai configuration
     ## Defines YAML anchors, which are reused in the config file
     snssais:
@@ -235,7 +236,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-upf-operator
+  name: oai-upf-controller
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-upf
@@ -254,11 +255,9 @@ spec:
       securityContext:
         runAsGroup: 0
         runAsUser: 0
-      imagePullSecrets:
-      - name: regcred
       containers:
-      - name: upf-operator
-        image: "docker.io/arorasagar/oai-upf-controller:v2.0.1"
+      - name: upf-controller
+        image: "docker.io/arorasagar/oai-upf-controller:v2.0.2"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'
@@ -275,6 +274,8 @@ spec:
             value: 'no'
           - name: 'KUBERNETES_BASE_URL'
             value: 'https://kubernetes.default.svc'
+          - name: 'KUBERNETES_TYPE'
+            value: 'openshift'
         volumeMounts:
           - mountPath: /tmp/op
             name: opconf
@@ -304,3 +305,4 @@ spec:
       restartPolicy: Always
       serviceAccountName: oai-upf-operator
       terminationGracePeriodSeconds: 5
+      

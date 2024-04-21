@@ -11,22 +11,14 @@ replacements:
     fieldPath: data.namespace
   targets:
   - select:
-      kind: Interface
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/namespace]
-  - select:
       kind: Capacity
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
   - select:
-      kind: DataNetwork
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/namespace]
-  - select:
-      kind: Dependency
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/namespace]
-  - select:
       kind: NFConfig
+    fieldPaths:
+    - metadata.annotations.[specializer.nephio.org/namespace]
+  - select:
+      kind: NetworkAttachmentDefinition
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]

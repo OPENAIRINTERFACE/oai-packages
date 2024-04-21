@@ -45,7 +45,7 @@ rules:
     resources: [nfdeployments,nfdeployments/status,nfconfigs,nfdeployments/finalizers]
     verbs: [get, list, watch, update, patch]
   - apiGroups: [""]
-    resources: [pods,serviceaccounts,configmaps,services,services/finalizers,serviceaccounts/finalizers]
+    resources: [pods, serviceaccounts, configmaps, services,services/finalizers,serviceaccounts/finalizers]
     verbs:  [get, list, watch, create, update, patch, delete]
   - apiGroups: ["apps","extensions"]
     resources: [deployments,deployments/status,deployments/finalizers]
@@ -128,7 +128,8 @@ data:
         cpu: '100m'
         memory: '256Mi'
     logLevel: info
-    image: 'docker.io/oaisoftwarealliance/oai-ausf:v2.0.1'
+    image: 'docker.io/oaisoftwarealliance/oai-ausf-ubi:v2.0.1'
+    httpVersion: 1
     fqdn:
       udm: oai-udm
       nrf: oai-nrf
@@ -147,7 +148,7 @@ data:
     # If you enable registration, the NF will use the NRF discovery mechanism
     register_nf:
       ausf: 'yes'
-    http_version: 2  # allowed value 1 and 2, make sure all NFs use the same HTTP version
+    http_version: {{ conf['httpVersion'] }}  # allowed value 1 and 2, make sure all NFs use the same HTTP version
     ############## SBI Interfaces
     ### Each NF takes its local SBI interfaces and remote interfaces from here, unless it gets them using NRF discovery mechanisms
     nfs:
@@ -174,7 +175,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-ausf-operator
+  name: oai-ausf-controller
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-ausf
@@ -194,8 +195,8 @@ spec:
         runAsGroup: 0
         runAsUser: 0
       containers:
-      - name: ausf-operator
-        image: "docker.io/arorasagar/oai-ausf-controller:v2.0.1"
+      - name: ausf-controller
+        image: "docker.io/arorasagar/oai-ausf-controller:v2.0.2"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'
@@ -212,6 +213,8 @@ spec:
             value: 'no'
           - name: 'KUBERNETES_BASE_URL'
             value: 'https://kubernetes.default.svc'
+          - name: 'KUBERNETES_TYPE'
+            value: 'openshift'
         volumeMounts:
           - mountPath: /tmp/op
             name: opconf

@@ -1,0 +1,42 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: du-edge-f1
+  namespace: example
+spec:
+  config: '{"cniVersion":"0.3.1","name": "du-edge-f1","plugins":[{"type":"macvlan","capabilities":{"ips":true},"master":"br-ex","mode":"bridge","ipam":{"type":"static"}}]}'
+---
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: du-edge-mplane
+  namespace: example
+spec:
+  config: '{"cniVersion":"0.3.1","name": "du-edge-mplane","plugins":[{"type":"macvlan","capabilities":{"ips":true},"master":"br-ex","mode":"bridge","ipam":{"type":"static"}}]}'
+---
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetwork
+metadata:
+  name: du-edge-cplane
+  namespace: openshift-sriov-network-operator
+spec:
+  networkNamespace: example
+  resourceName: ruvfio
+  vlan: 3
+  spoofChk: "off"
+  trust: "on"
+  capabilities: '{ "mac": true }'
+---
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetwork
+metadata:
+  name: du-edge-uplane
+  namespace: openshift-sriov-network-operator
+spec:
+  networkNamespace: example
+  resourceName: ruvfio
+  vlan: 3
+  spoofChk: "off"
+  trust: "on"
+  capabilities: '{ "mac": true }'
+  

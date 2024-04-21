@@ -45,7 +45,7 @@ rules:
     resources: [nfdeployments,nfdeployments/status,nfconfigs,nfdeployments/finalizers]
     verbs: [get, list, watch, update, patch]
   - apiGroups: [""]
-    resources: [pods,serviceaccounts,configmaps,services,services/finalizers,serviceaccounts/finalizers]
+    resources: [pods, serviceaccounts, configmaps, services,services/finalizers,serviceaccounts/finalizers]
     verbs:  [get, list, watch, create, update, patch, delete]
   - apiGroups: ["apps","extensions"]
     resources: [deployments,deployments/status,deployments/finalizers]
@@ -120,6 +120,7 @@ data:
         protocol: TCP
     nfInterfaces:
       sbi: 'eth0'
+    httpVersion: 1
     compute:
       req:
         cpu: '100m'
@@ -128,10 +129,10 @@ data:
         cpu: '100m'
         memory: '256Mi'
     logLevel: info
-    image: 'docker.io/oaisoftwarealliance/oai-udm:v2.0.1'
+    image: 'docker.io/oaisoftwarealliance/oai-udm-ubi:v2.0.1'
     fqdn:
-      nrf: 'oai-nrf'
-      udr: 'oai-udr'
+      nrf: oai-nrf
+      udr: oai-udr
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -145,7 +146,7 @@ data:
       udm: {{ conf['logLevel'] }}
     register_nf:
       udm: 'yes'
-    http_version: 2  # allowed value 1 and 2, make sure all NFs use the same HTTP version
+    http_version: {{ conf['httpVersion'] }}  # allowed value 1 and 2, make sure all NFs use the same HTTP version
     ############## SBI Interfaces
     ### Each NF takes its local SBI interfaces and remote interfaces from here, unless it gets them using NRF discovery mechanisms
     nfs:
@@ -172,7 +173,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-udm-operator
+  name: oai-udm-controller
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-udm
@@ -192,8 +193,8 @@ spec:
         runAsGroup: 0
         runAsUser: 0
       containers:
-      - name: udm-operator
-        image: "docker.io/arorasagar/oai-udm-controller:v2.0.1"
+      - name: udm-controller
+        image: "docker.io/arorasagar/oai-udm-controller:v2.0.2"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'
@@ -210,6 +211,8 @@ spec:
             value: 'no'
           - name: 'KUBERNETES_BASE_URL'
             value: 'https://kubernetes.default.svc'
+          - name: 'KUBERNETES_TYPE'
+            value: 'openshift'
         volumeMounts:
           - mountPath: /tmp/op
             name: opconf
@@ -239,3 +242,4 @@ spec:
       restartPolicy: Always
       serviceAccountName: oai-udm-operator
       terminationGracePeriodSeconds: 5
+      

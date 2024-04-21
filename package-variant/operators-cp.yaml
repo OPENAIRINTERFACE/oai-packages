@@ -6,11 +6,11 @@ spec:
   upstream:
     repo: oai-packages
     package: oai-cp-operators
-    revision: r2
+    revision: onesummit
   downstream:
-    repo: core
+    repo: regional
     package: oai-cp-operators
   annotations:
     approval.nephio.org/policy: initial
   injectors:
-  - name: core
+  - name: regional

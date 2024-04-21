@@ -18,21 +18,7 @@ replacements:
       delimiter: '-'
       index: 1
   - select:
-      kind: Interface
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/owner]
-    options:
-      delimiter: '-'
-      index: 1
-  - select:
       kind: Capacity
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/owner]
-    options:
-      delimiter: '-'
-      index: 1
-  - select:
-      kind: DataNetwork
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/owner]
     options:

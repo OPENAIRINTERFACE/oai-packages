@@ -1,0 +1,16 @@
+apiVersion: config.porch.kpt.dev/v1alpha1
+kind: PackageVariant
+metadata:
+  name: regional-oai-cucp
+spec:
+  upstream:
+    repo: oai-packages
+    package: oai-cucp
+    revision: onesummit
+  downstream:
+    repo: regional
+    package: oai-cucp
+  annotations:
+    approval.nephio.org/policy: initial
+  injectors:
+  - name: regional

@@ -1,0 +1,59 @@
+apiVersion: workload.nephio.org/v1alpha1
+kind: NFConfig
+metadata:
+  name: oai-du-config
+  namespace: example
+spec:
+  configRefs:
+    - apiVersion: workload.nephio.org/v1alpha1
+      kind: RANConfig
+      metadata:
+        name: ranconfig
+      spec:
+        gNBID: 12
+        rfSimulated: false
+        nrCellId: 1
+        duID: 12
+        duName: oai-benetel
+        physicalCellID: 0
+        forceUL256qamOff: 1
+        pdschAntennaPortsXP: 2
+        puschAntennaPorts: 4
+        ruConfig:
+          nbTx: 4
+          nbRx: 4
+          cPlaneMacAdd: 70:b3:d5:e1:5b:ff
+          uPlaneMacAdd: 70:b3:d5:e1:5b:ff
+          mtu: 9216
+        frequencyInfoDL:
+          absoluteFrequencySSB: 623328
+          dlFrequencyBand: 78
+          dlAbsoluteFrequencyPointA: 620052
+          dlSubcarrierSpacing: 1
+          dlCarrierBandwidth: 273
+        frequencyInfoUL:
+          ulFrequencyBand: 78
+          ulSubcarrierSpacing: 1
+          ulCarrierBandwidth: 273
+        rachConfigCommon:
+          prachConfigurationIndex: 151
+        slotPattern:
+          dlUlTransmissionPeriodicity: 6
+          nrofDownlinkSlots: 7
+          nrofDownlinkSymbols: 6
+          nrofUplinkSlots: 2
+          nrofUplinkSymbols: 4
+    - apiVersion: workload.nephio.org/v1alpha1
+      kind: PLMN
+      metadata:
+        name: plmn
+      spec:
+        PLMNInfo:
+        - plmnID:
+            mcc: "208"
+            mnc: "99"
+          tac: 1
+          nssai:
+          - sd: ffffff
+            sst: 1
+            

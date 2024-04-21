@@ -136,7 +136,8 @@ data:
         cpu: '100m'
         memory: '512Mi'
     logLevel: info
-    image: 'docker.io/oaisoftwarealliance/oai-amf:v2.0.1'
+    image: 'docker.io/oaisoftwarealliance/oai-amf-ubi:v2.0.1'
+    httpVersion: 1
     fqdn:
       smf: 'oai-smf'
       ausf: 'oai-ausf'
@@ -156,7 +157,7 @@ data:
     # If you enable registration, the other NFs will use the NRF discovery mechanism
     register_nf:
       amf: yes
-    http_version: 2
+    http_version: {{ conf['httpVersion'] }}
     ## general single_nssai configuration
     ## Defines YAML anchors, which are reused in the config file
     snssais:
@@ -240,7 +241,7 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: oai-amf-operator
+  name: oai-amf-controller
   namespace: oai-cn-operators
   labels:
     app.kubernetes.io/name: oai-amf
@@ -260,8 +261,8 @@ spec:
         runAsGroup: 0
         runAsUser: 0
       containers:
-      - name: amf-operator
-        image: "docker.io/arorasagar/oai-amf-controller:v2.0.1"
+      - name: amf-controller
+        image: "docker.io/arorasagar/oai-amf-controller:v2.0.2"
         imagePullPolicy: Always
         env:
           - name: 'NF_TYPE'
@@ -278,6 +279,8 @@ spec:
             value: 'no'
           - name: 'KUBERNETES_BASE_URL'
             value: 'https://kubernetes.default.svc'
+          - name: 'KUBERNETES_TYPE'
+            value: 'openshift'
         volumeMounts:
           - mountPath: /tmp/op
             name: opconf
@@ -285,11 +288,11 @@ spec:
             name: nfconf
         resources:
           requests:
-            memory: "128Mi"
-            cpu: "50m"
+            memory: "256Mi"
+            cpu: "100m"
           limits:
-            memory: "128Mi"
-            cpu: "50m"
+            memory: "256Mi"
+            cpu: "100m"
         # livenessProbe:
         #   httpGet:
         #     path: /healthz
@@ -307,3 +310,4 @@ spec:
       restartPolicy: Always
       serviceAccountName: oai-amf-operator
       terminationGracePeriodSeconds: 5
+      

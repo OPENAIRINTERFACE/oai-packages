@@ -1,22 +1,16 @@
 apiVersion: config.porch.kpt.dev/v1alpha2
 kind: PackageVariantSet
 metadata:
-  name: core-oai-udr
+  name: regional-oai-udr
 spec:
   upstream:
     repo: oai-packages
     package: oai-udr
-    revision: r2
-  targets:
-  - objectSelector:
-      apiVersion: infra.nephio.org/v1alpha1
-      kind: WorkloadCluster
-      matchLabels:
-        nephio.org/site-type: core
-    template:
-      downstream:
-        package: oai-udr
-      annotations:
-        approval.nephio.org/policy: initial
-      injectors:
-      - nameExpr: target.name
+    revision: onesummit
+  downstream:
+    repo: regional
+    package: oai-udr
+  annotations:
+    approval.nephio.org/policy: initial
+  injectors:
+  - name: regional

@@ -12,8 +12,8 @@ spec:
       spec:
         plmnInfo:
           - plmnID:
-              mcc: "001"
-              mnc: "01"
+              mcc: "208"
+              mnc: "99"
             tac: 1
             nssai:
               - sst: 1
@@ -21,7 +21,7 @@ spec:
                 dnnInfo:
                   - name: internet
                     sessionType: ipv4
-                    dns: 8.8.8.8
+                    dns: 172.21.3.100
     - apiVersion: cellular.nephio.org/v1alpha1
       kind: ServedGUAMI
       metadata:
@@ -32,5 +32,5 @@ spec:
             amfRegionID: '01'
             amfSetID: '001'
           plmnID:
-            mcc: "001"
-            mnc: "01"
+            mcc: "208"
+            mnc: "99"
