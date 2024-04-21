@@ -1,5 +1,5 @@
-apiVersion: config.porch.kpt.dev/v1alpha2
-kind: PackageVariantSet
+apiVersion: config.porch.kpt.dev/v1alpha1
+kind: PackageVariant
 metadata:
   name: regional-oai-database
 spec:

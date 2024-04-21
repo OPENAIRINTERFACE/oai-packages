@@ -1,18 +1,16 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: regional-oai-udr
+  name: oai-ranc-operators
 spec:
   upstream:
     repo: oai-packages
-    package: oai-udr
+    package: oai-ranc-operators
     revision: onesummit
   downstream:
     repo: regional
-    package: oai-udr
+    package: oai-ranc-operators
   annotations:
     approval.nephio.org/policy: initial
   injectors:
   - name: regional
-
----
