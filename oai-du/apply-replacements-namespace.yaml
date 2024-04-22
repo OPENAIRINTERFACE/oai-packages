@@ -13,6 +13,7 @@ replacements:
   - select:
       kind: NFConfig
     fieldPaths:
+    - metadata.namespace
     - metadata.annotations.[specializer.nephio.org/namespace]
   - select:
       kind: NetworkAttachmentDefinition
@@ -24,4 +25,8 @@ replacements:
     fieldPaths:
     - spec.networkNamespace
     - metadata.annotations.[specializer.nephio.org/namespace]
-    
+  - select:
+      kind: NFDeployment
+    fieldPaths:
+    - metadata.namespace
+    - metadata.annotations.[specializer.nephio.org/namespace]
