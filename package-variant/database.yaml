@@ -1,16 +1,16 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: regional-oai-database
+  name: core-oai-database
 spec:
   upstream:
     repo: oai-packages
     package: database
     revision: onesummit
   downstream:
-    repo: regional
+    repo: core
     package: database
   annotations:
     approval.nephio.org/policy: initial
   injectors:
-  - name: regional
+  - name: core

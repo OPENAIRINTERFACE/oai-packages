@@ -1,17 +1,17 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariantSet
 metadata:
-  name: regional-oai-smf
+  name: core-oai-smf
 spec:
   upstream:
     repo: oai-packages
     package: oai-smf
     revision: onesummit
   downstream:
-    repo: regional
+    repo: core
     package: oai-smf
   annotations:
     approval.nephio.org/policy: initial
   injectors:
-  - name: regional
+  - name: core
 

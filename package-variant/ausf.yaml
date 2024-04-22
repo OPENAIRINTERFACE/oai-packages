@@ -1,16 +1,16 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: regional-oai-ausf
+  name: core-oai-ausf
 spec:
   upstream:
     repo: oai-packages
     package: oai-ausf
     revision: onesummit
   downstream:
-    repo: regional
+    repo: core
     package: oai-ausf
   annotations:
     approval.nephio.org/policy: initial
   injectors:
-  - name: regional
+  - name: core

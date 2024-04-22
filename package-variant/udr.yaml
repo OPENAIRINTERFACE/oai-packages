@@ -1,18 +1,18 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: PackageVariant
 metadata:
-  name: regional-oai-udr
+  name: core-oai-udr
 spec:
   upstream:
     repo: oai-packages
     package: oai-udr
     revision: onesummit
   downstream:
-    repo: regional
+    repo: core
     package: oai-udr
   annotations:
     approval.nephio.org/policy: initial
   injectors:
-  - name: regional
+  - name: core
 
 ---
