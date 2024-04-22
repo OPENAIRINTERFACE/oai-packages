@@ -17,5 +17,12 @@ replacements:
   - select:
       kind: NetworkAttachmentDefinition
     fieldPaths:
+    - metadata.namespace
+    - metadata.annotations.[specializer.nephio.org/namespace]
+  - select:
+      kind: SriovNetwork
+    fieldPaths:
+    - spec.networkNamespace
+    - metadata.namespace
     - metadata.annotations.[specializer.nephio.org/namespace]
     
