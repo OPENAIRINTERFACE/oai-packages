@@ -23,6 +23,5 @@ replacements:
       kind: SriovNetwork
     fieldPaths:
     - spec.networkNamespace
-    - metadata.namespace
     - metadata.annotations.[specializer.nephio.org/namespace]
     
