@@ -129,7 +129,7 @@ data:
         protocol: TCP
     httpVersion: 1
     nfInterfaces:
-      sbi: 'n6'
+      sbi: 'eth0'
       n3: 'n3'
       n4: 'n4'
       n6: 'n6'
