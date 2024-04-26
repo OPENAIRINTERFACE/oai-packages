@@ -17,10 +17,4 @@ replacements:
     options:
       delimiter: '-'
       index: 1
-  - select:
-      kind: Interface
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/owner]
-    options:
-      delimiter: '-'
-      index: 1
+
