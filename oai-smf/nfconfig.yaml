@@ -22,5 +22,5 @@ spec:
                 dnnInfo:
                   - name: internet
                     sessionType: ipv4
-                    dns: 173.21.3.100
+                    dns: 172.21.3.100
                     subnet: 10.1.0.0/24

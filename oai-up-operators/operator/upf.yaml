@@ -129,10 +129,10 @@ data:
         protocol: TCP
     httpVersion: 1
     nfInterfaces:
-      sbi: 'eth0'
+      sbi: 'n6'
       n3: 'n3'
       n4: 'n4'
-      n6: 'n6'
+      n6: 'eth0'
       n9: 'eth0'
     compute:
       req:
@@ -142,7 +142,7 @@ data:
         cpu: '1'
         memory: '512Mi'
     logLevel: debug
-    image: 'docker.io/oaisoftwarealliance/oai-upf-ubi:v2.0.1'
+    image: 'docker.io/oaisoftwarealliance/oai-upf:v2.0.1'
     fqdn:
       nrf: '172.21.9.50'
       smf: '127.0.0.1'
