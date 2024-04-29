@@ -386,12 +386,12 @@ data:
     };
 
     fhi_72 = {
-      dpdk_devices = ("@C_PLANE_PCI_ADD@", "@U_PLANE_PCI_ADD@");
+      dpdk_devices = ("@U_PLANE_PCI_ADD@","@C_PLANE_PCI_ADD@");
       system_core = @SYSTEM_CORE@;
       io_core = @IO_CORE@;
       worker_cores = (@WORKER_CORE_LIST@);
-      du_addr = ("{{ conf['nfInterfaces']['cPlaneMacAdd'] }}", "{{ conf['nfInterfaces']['uPlaneMacAdd'] }}");
-      ru_addr = ("{{ conf['RANConfig']['ruConfig']['cPlaneMacAdd'] }}", "{{ conf['RANConfig']['ruConfig']['uPlaneMacAdd'] }}");
+      du_addr = ("{{ conf['nfInterfaces']['uPlaneMacAdd'] }}", "{{ conf['nfInterfaces']['cPlaneMacAdd'] }}");
+      ru_addr = ("{{ conf['RANConfig']['ruConfig']['uPlaneMacAdd'] }}", "{{ conf['RANConfig']['ruConfig']['cPlaneMacAdd'] }}");
       mtu = {{ conf['RANConfig']['ruConfig']['mtu'] }};
       file_prefix = "fhi_72";
       fh_config = ({
