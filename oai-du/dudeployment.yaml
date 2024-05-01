@@ -16,11 +16,11 @@ spec:
       address: 10.10.0.200/8
       gateway: 10.0.0.1
     vlanID: 1
-  - name: cplane
+  - name: uplane
     mac: 00:11:22:33:44:66
     vlanID: 3
     sriov: true
-  - name: uplane
+  - name: cplane
     mac: 00:11:22:33:44:67
     vlanID: 3
     sriov: true

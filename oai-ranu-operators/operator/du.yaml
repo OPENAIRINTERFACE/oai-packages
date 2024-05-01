@@ -133,13 +133,14 @@ data:
         cpu: '8'
         memory: '8Gi'
         hugepages: '10Gi'
-        sriov: 2
+        sriov: 1
       limits:
         cpu: '8'
         memory: '8Gi'
         hugepages: '10Gi'
-        sriov: 2
-    sriovResource: ruvfio
+        sriov: 1
+    sriovResourceCplane: ruvfioc
+    sriovResourceUplane: ruvfiou
     cucpIpaddress: 192.168.32.2
     image: 'docker.io/oaisoftwarealliance/oai-gnb-ubi:72'
 ---
