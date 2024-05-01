@@ -17,11 +17,11 @@ spec:
       gateway: 10.0.0.1
     vlanID: 1
   - name: cplane
-    mac: 00:11:22:33:44:67
+    mac: 00:11:22:33:44:66
     vlanID: 3
     sriov: true
   - name: uplane
-    mac: 00:11:22:33:44:66
+    mac: 00:11:22:33:44:67
     vlanID: 3
     sriov: true
   networkInstances:
