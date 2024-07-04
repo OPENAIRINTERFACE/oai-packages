@@ -7,7 +7,7 @@
       </a>
     </td>
     <td style="border-collapse: collapse; border: none; vertical-align: center;">
-      <b><font size = "5">OpenAirInterface 5G Core Network Function Topology for Nephio</font></b>
+      <b><font size = "5">OpenAirInterface 5G Core Network Function Topology for Nephio R3</font></b>
     </td>
   </tr>
 </table>
@@ -16,7 +16,7 @@
 
 # 1. Introduction
 
-This repository contains Kpt packages and package variants for OAI operators and network functions. Designed for [Nephio](https://nephio.org/) release 2. 
+This repository contains Kpt packages and package variants for OAI operators and network functions. Designed for [Nephio](https://nephio.org/) release 3. 
 
 **NOTICE**
 
@@ -34,8 +34,6 @@ Repository structure is below
 ├── oai-amf
 ├── oai-ausf
 ├── oai-nrf
-├── oai-nr-ue
-│   └── nrue
 ├── oai-cp-operators
 │   ├── crds
 │   └── operator
@@ -43,8 +41,6 @@ Repository structure is below
 │   ├── crds
 │   └── operator
 ├── oai-repository
-├── oai-rfsim-gnb
-│   └── gnb
 ├── oai-smf
 ├── oai-udm
 ├── oai-udr
@@ -53,13 +49,13 @@ Repository structure is below
 └── package-variant	Package variant for all nfs, database and operator
 ```
 
-The package-variants are designed to deploy Nephio R2 deployment. 
+The package-variants are designed to deploy Nephio R3 deployment. 
 
 # 2. How to deploy the toplogy on Nephio
 
 ## Step 0: Prerequisite
 
-1. Make sure that you have a running core, core and edge cluster topology as defined in [nephio exercise](https://github.com/nephio-project/docs/blob/v1.0.1/user-guide/exercises.md). 
+1. Make sure that you have a running core, core and edge cluster topology as defined in [nephio exercise](https://github.com/nephio-project/docs/tree/main/content/en/docs/guides/install-guides). 
 
 ```bash
 git clone https://github.com/OPENAIRINTERFACE/oai-packages.git
@@ -108,7 +104,7 @@ kubectl get repositories | grep oai-packages
 
 ```console
 NAME                      TYPE   CONTENT   DEPLOYMENT   READY   ADDRESS
-oai-packages              git    Package   false        True    https://github.com/OPENAIRINTERFACE/oai-packages
+oai-core-packages         git    Package   false        True    https://github.com/OPENAIRINTERFACE/oai-packages
 ```
 </details>
 
@@ -252,7 +248,7 @@ kubectl logs -n oai-core <edge-upf-pod-name> --context edge-admin@edge | grep 'R
 
 In case you don't see a session the mostly probably it is a networking issue in the setup and UPF is not able to reach the SMF n4 ip-address. To check this we suggest that you go inside the SMF pod and install `tcpdump` and ping `n4` ip-address of UPF. 
 
-To deploy the RAN network functions you can follow the steps from the Nephio documentation. 
+To deploy the RAN network functions you can follow the steps from the [Nephio documentation](https://github.com/nephio-project/docs/blob/main/content/en/docs/guides/user-guides/exercise-2-oai.md). 
 
 # Contribution requests
 

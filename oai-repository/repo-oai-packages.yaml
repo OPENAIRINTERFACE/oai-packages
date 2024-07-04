@@ -10,7 +10,7 @@ spec:
   content: Package
   deployment: false
   git:
-    branch: r2
+    branch: r3
     directory: /
     repo: https://github.com/OPENAIRINTERFACE/oai-packages
   type: git
