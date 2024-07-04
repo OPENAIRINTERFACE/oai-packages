@@ -1,7 +1,7 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: Repository
 metadata:
-  name: oai-packages
+  name: oai-core-packages
   namespace: default
   labels:
     kpt.dev/repository-access: read-only
