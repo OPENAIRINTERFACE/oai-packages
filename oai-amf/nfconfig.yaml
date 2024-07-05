@@ -3,6 +3,10 @@ kind: NFConfig
 metadata:
   name: oai-amf-config
   namespace: oai-core
+  annotations:
+    config.kubernetes.io/local-config: "true"
+    specializer.nephio.org/owner: workload.nephio.org/v1alpha1.NFDeployment.amf-example
+    specializer.nephio.org/namespace: example
 spec:
   configRefs:
     - apiVersion: cellular.nephio.org/v1alpha1
