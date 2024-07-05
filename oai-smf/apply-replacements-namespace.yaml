@@ -22,7 +22,3 @@ replacements:
       kind: Dependency
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
-  - select:
-      kind: NFConfig
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/namespace]
