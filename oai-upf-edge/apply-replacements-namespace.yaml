@@ -22,3 +22,4 @@ replacements:
       kind: NFConfig
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
+    - metadata.namespace
