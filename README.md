@@ -12,8 +12,6 @@
   </tr>
 </table>
 
-[[_TOC_]]
-
 # 1. Introduction
 
 This repository contains Kpt packages and package variants for OAI operators and network functions. Designed for [Nephio](https://nephio.org/) release 3. 
