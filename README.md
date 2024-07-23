@@ -253,3 +253,5 @@ To deploy the RAN network functions you can follow the steps from the [Nephio do
 In a general way, anybody who is willing can contribute on any part of the code in any network component.
 
 Contributions can be simple bugfixes, advices and remarks on the design, architecture, coding/implementation.
+
+To know more about how to contribute you can follow the instructions in [CONTRIBUTING.md](./CONTRIBUTING.md)
