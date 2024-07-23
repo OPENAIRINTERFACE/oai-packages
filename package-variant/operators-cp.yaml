@@ -4,9 +4,9 @@ metadata:
   name: oai-cp-operators
 spec:
   upstream:
-    repo: oai-packages
+    repo: oai-core-packages
     package: oai-cp-operators
-    revision: v2.0.0
+    revision: main
   downstream:
     repo: core
     package: oai-cp-operators

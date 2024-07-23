@@ -1,7 +1,7 @@
 apiVersion: config.porch.kpt.dev/v1alpha1
 kind: Repository
 metadata:
-  name: oai-packages
+  name: oai-core-packages
   namespace: default
   labels:
     kpt.dev/repository-access: read-only
@@ -10,7 +10,7 @@ spec:
   content: Package
   deployment: false
   git:
-    branch: v2.0.0
+    branch: r3
     directory: /
     repo: https://github.com/OPENAIRINTERFACE/oai-packages
   type: git

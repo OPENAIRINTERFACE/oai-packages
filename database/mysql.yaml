@@ -102,7 +102,7 @@ spec:
       #   command: ['do', 'something']
       containers:
         - name: mysql
-          image: "docker.io/mysql:5.7"
+          image: "docker.io/mysql:8.0"
           imagePullPolicy: "IfNotPresent"
           resources:
             requests:

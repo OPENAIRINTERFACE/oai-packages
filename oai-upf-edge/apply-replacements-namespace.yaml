@@ -15,28 +15,10 @@ replacements:
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
   - select:
-      kind: Namespace
-    fieldPaths:
-    - metadata.name
-  - select:
       kind: Capacity
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/namespace]
-  - select:
-      kind: DataNetwork
-    fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/namespace]
-  - select:
-      kind: Dependency
     fieldPaths:
     - metadata.annotations.[specializer.nephio.org/namespace]
   - select:
       kind: NFConfig
     fieldPaths:
-    - metadata.annotations.[specializer.nephio.org/namespace]
     - metadata.namespace
-  - select:
-      kind: NFDeployment
-    fieldPaths:
-    - metadata.namespace
-    - metadata.annotations.[specializer.nephio.org/namespace]

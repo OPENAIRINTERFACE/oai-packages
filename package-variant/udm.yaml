@@ -4,9 +4,9 @@ metadata:
   name: core-oai-udm
 spec:
   upstream:
-    repo: oai-packages
+    repo: oai-core-packages
     package: oai-udm
-    revision: v2.0.0
+    revision: main
   targets:
   - objectSelector:
       apiVersion: infra.nephio.org/v1alpha1

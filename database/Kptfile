@@ -8,5 +8,5 @@ info:
   description: this package is used to deploy mysql database required by OAI-UDR
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-replacements:v0.1.1
-      configPath: apply-replacements-namespace.yaml
+    - image: gcr.io/kpt-fn/set-namespace:v0.4.1
+      configPath: cm-namespace.yaml

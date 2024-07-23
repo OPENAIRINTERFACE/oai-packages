@@ -3,7 +3,7 @@ apiVersion: workload.nephio.org/v1alpha1
 kind: NFConfig
 metadata:
   name: oai-smf-config
-  namespace: example
+  namespace: oai-core
 spec:
   configRefs:
     - apiVersion: cellular.nephio.org/v1alpha1
@@ -23,3 +23,4 @@ spec:
                   - name: internet
                     sessionType: ipv4
                     dns: 8.8.8.8
+                    subnet: 10.1.0.0/24

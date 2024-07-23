@@ -4,9 +4,9 @@ metadata:
   name: oai-up-operators
 spec:
   upstream:
-    repo: oai-packages
+    repo: oai-core-packages
     package: oai-up-operators
-    revision: v2.0.0
+    revision: main
   downstream:
     repo: edge
     package: oai-up-operators
