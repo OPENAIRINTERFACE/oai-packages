@@ -13,7 +13,7 @@
 #-------------------------------------------------------------------------------
 # For more information about the OpenAirInterface (OAI) Software Alliance:
 #      contact@openairinterface.org
-##################################################################################
+################################################################################
 apiVersion: v1
 kind: ServiceAccount
 metadata:
